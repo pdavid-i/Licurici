@@ -35,7 +35,7 @@ try
     context.Database.Migrate();
     DbInitializer.Initialize(context);
 }
-catch (Exception ex) {
+catch (Exception ex) { 
     logger.LogError(ex, "An error occurred while migrating or initializing the database.");
 }
 
