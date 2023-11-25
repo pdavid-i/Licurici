@@ -1,0 +1,72 @@
+.hero {
+    width: 100%;
+    height: 100vh;
+    background-image: url(assets/first_bg.png);
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.lights img {
+    width: 90px;
+    animation: lightword 10s linear infinite;
+}
+
+.lights {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: absolute;
+    bottom: -140px;
+}
+
+@keyframes lightword {
+    0% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+    40% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(-80vh);
+        opacity: 0;
+    }
+}
+
+.lights img:nth-child(1) {
+    animation-delay: 2s;
+    width: 60px;
+}
+
+.lights img:nth-child(2) {
+    width: 110px;
+    animation-delay: 5s;
+}
+
+.lights img:nth-child(3) {
+    animation-delay: 1s;
+}
+
+.lights img:nth-child(4) {
+    width: 140px;
+    animation-delay: 3s;
+}
+
+.lights img:nth-child(5) {
+    width: 50px;
+    animation-delay: 7s;
+}
+
+.lights img:nth-child(6) {
+    animation-delay: 4s;
+}
+
+.lights img:nth-child(7) {
+    animation-delay: 5.5s;
+}
