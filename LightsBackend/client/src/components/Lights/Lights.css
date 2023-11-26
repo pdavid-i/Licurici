@@ -1,12 +1,3 @@
-.hero {
-    width: 100%;
-    height: 100vh;
-    background-image: url(assets/first_bg.png);
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    overflow: hidden;
-}
 
 .lights img {
     width: 90px;
@@ -39,7 +30,7 @@
     }
 }
 
-.lights img:nth-child(1) {
+#firstLight {
     animation-delay: 2s;
     width: 60px;
 }

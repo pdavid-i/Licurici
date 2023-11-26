@@ -1,0 +1,15 @@
+h1 {
+    color: #fff;
+    font-size: 8em;
+    margin-bottom: 0.1em;
+}
+
+p {
+    color: #fff;
+    font-size: 2em;
+}
+
+.content {
+    margin-top: 10%;
+    margin-left: 10%;
+}

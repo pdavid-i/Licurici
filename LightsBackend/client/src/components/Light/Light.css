@@ -1,0 +1,26 @@
+img {
+    width: 90px;
+    animation: lightword 10s linear infinite;
+}
+
+@keyframes lightword {
+    0% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+    40% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(-80vh);
+        opacity: 0;
+    }
+}
+
+#firstLight {
+    animation-delay: 2s;
+    width: 60px;
+}
