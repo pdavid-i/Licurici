@@ -12,6 +12,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors();
+
 // add ef to DI
 builder.Services.AddDbContext<MyDbContext>(opt => {
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -38,6 +40,12 @@ try
 catch (Exception ex) { 
     logger.LogError(ex, "An error occurred while migrating or initializing the database.");
 }
+
+app.UseCors(opt => {
+    opt.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+});
+
+app.UseAuthorization();
 
 app.MapControllers();
 
