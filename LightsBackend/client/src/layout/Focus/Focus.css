@@ -1,0 +1,9 @@
+.focus {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background: #00001De1;
+}

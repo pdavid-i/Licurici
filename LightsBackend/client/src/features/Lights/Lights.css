@@ -1,7 +1,7 @@
 
 .lights img {
-    width: 90px;
     animation: lightword 10s linear infinite;
+    cursor: pointer;
 }
 
 .lights {
@@ -28,36 +28,4 @@
         transform: translateY(-80vh);
         opacity: 0;
     }
-}
-
-#firstLight {
-    animation-delay: 2s;
-    width: 60px;
-}
-
-.lights img:nth-child(2) {
-    width: 110px;
-    animation-delay: 5s;
-}
-
-.lights img:nth-child(3) {
-    animation-delay: 1s;
-}
-
-.lights img:nth-child(4) {
-    width: 140px;
-    animation-delay: 3s;
-}
-
-.lights img:nth-child(5) {
-    width: 50px;
-    animation-delay: 7s;
-}
-
-.lights img:nth-child(6) {
-    animation-delay: 4s;
-}
-
-.lights img:nth-child(7) {
-    animation-delay: 5.5s;
 }

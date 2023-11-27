@@ -1,19 +1,17 @@
-import logo from '../../assets/light_orb.png'
-import blue_orb from '../../assets/blue_ring.png'
 import './Lights.css'
 import Light from '../Light/Light'
 
-function Lights() {
+function Lights({toggleWordModal} : any) {
   return (
     <>
         <div className="lights">
-            <Light />
-            <a href="https://www.youtube.com/watch?v=QQu1_bf1Bdo&ab_channel=Fireship"><img src={logo} alt="lights" /></a>
-            <a href="https://www.youtube.com/watch?v=QQu1_bf1Bdo&ab_channel=Fireship"><img src={logo} alt="lights" /></a>
-            <img src={blue_orb} alt="lights" />
-            <img src={logo} alt="lights" />
-            <img src={blue_orb} alt="lights" />
-            <img src={logo} alt="lights" />
+            <Light color="blue" width="60px" delay="2s" toggleWordModal={toggleWordModal} />
+            <Light color="yellow" width="110px" delay="5s" toggleWordModal={toggleWordModal} />
+            <Light color="yellow" width="60px" delay="1s" toggleWordModal={toggleWordModal} />
+            <Light color="blue" width="140px" delay="3s" toggleWordModal={toggleWordModal} />
+            <Light color="blue" width="70px" delay="7s" toggleWordModal={toggleWordModal} />
+            <Light color="yellow" width="90px" delay="4s" toggleWordModal={toggleWordModal} />
+            <Light color="blue" width="50px" delay="5.5s" toggleWordModal={toggleWordModal} />
         </div>
     </>
   )

@@ -1,0 +1,4 @@
+.modal {
+    height: min(60%, 400px);
+    width: clamp(50%, 600px, 90%);
+}
