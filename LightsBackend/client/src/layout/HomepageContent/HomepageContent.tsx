@@ -1,3 +1,4 @@
+import ExpandingButton from '../ExtendButton/ExpandingButton'
 import './HomepageContent.css'
 
 function HomepageContent({toggleGameVisibility} : any) {
@@ -7,7 +8,7 @@ function HomepageContent({toggleGameVisibility} : any) {
         <div className='content'>
             <h1>Logos</h1>
             <p> <i>Limitele lumii mele sunt limitele limbii mele</i> - Ludwig Wittgenstein</p>
-            <button onClick={toggleGameVisibility}> Exploreaza lumea </button>
+            <ExpandingButton text='Extinde lumea'  toggleGameVisibility={toggleGameVisibility} />
         </div>
     )
 }

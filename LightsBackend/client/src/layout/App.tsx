@@ -1,4 +1,4 @@
-import Lights from './Lights/Lights'
+import Lights from '../features/Lights/Lights'
 import './App.css'
 import Navbar from './Navbar/Navbar'
 import { useState } from 'react';
