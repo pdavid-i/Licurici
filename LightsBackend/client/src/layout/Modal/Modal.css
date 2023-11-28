@@ -1,4 +1,48 @@
 .modal {
-    height: min(60%, 400px);
-    width: clamp(50%, 600px, 90%);
+    width: clamp(40%, 600px, 90%);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+    background-color: rgb(3, 3, 105);
+    opacity: 0.95;
+}
+
+h3 {
+   font-size: 3em; 
+   color: white;
+   margin-bottom: 20px;
+   text-align: center;
+}
+
+.example {
+    padding-left: 30px;
+    margin-top: 0px;
+}
+
+ul {
+    padding:10px 30px;
+}
+
+p {
+    font-size: 1.6em;
+}
+
+hr {
+    padding: 0;
+    border: none;
+    border-top: medium double #ffffff;
+    color: #ffffff;
+    text-align: center;
+    margin: 0;
+    overflow: visible;
+}
+
+/* hacky css I found on the web, old school ig */
+hr::after {
+    content: '§';
+    padding: 0 4px;
+    top: -11px;
+    position: relative;
+    background: rgb(3, 3, 105);
 }

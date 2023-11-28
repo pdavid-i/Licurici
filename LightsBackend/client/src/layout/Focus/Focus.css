@@ -6,4 +6,5 @@
     align-items: center;
     position: absolute;
     background: #00001De1;
+    z-index: 4;
 }
