@@ -3,6 +3,8 @@ import Focus from "../Focus/Focus";
 import "./Modal.css";
 import { useEffect, useState } from "react";
 import {Word} from "../../types/Word";
+import axios from "axios";
+import agent from "../../api/agent";
 
 const Modal = ({text, toggleWordModal} : any)  => {
 
@@ -28,9 +30,9 @@ const Modal = ({text, toggleWordModal} : any)  => {
     }
 
     useEffect(() => {
-    fetch('http://localhost:5000/random')
-    .then((res) => res.json())
-    .then(data => setWord(data))
+        agent.Words.random()
+        .then(res => setWord(res))
+        .catch(err => console.log(err.response))
     }, [])
 
     return (

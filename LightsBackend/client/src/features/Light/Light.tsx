@@ -4,16 +4,6 @@ import './Light.css'
 
 function Light({color, width, delay, toggleWordModal} : any) {
     async function handleClick() {
-        /*try {
-            const response = await fetch('http://localhost:5000/api/Words');
-            if (!response.ok) {
-              throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            const data = await response.json();
-            console.log("API call result:", data); // Logging the message from the API response
-          } catch (error) {
-            console.error("Error fetching data:", error);
-          }   */   
           toggleWordModal();
         }
 

@@ -3,7 +3,7 @@ import './Homepage.css'
 import { useState } from 'react';
 import HomepageContent from '../HomepageContent/HomepageContent';
 import Modal from '../Modal/Modal';
-import {motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
 
 function Homepage() {
   const [gameStarted, setGameStarted] = useState(false);

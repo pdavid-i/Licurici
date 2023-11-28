@@ -7,3 +7,7 @@
     position: relative;
     overflow: hidden;
 }
+
+.toaster-messages {
+    margin-right: 80px;
+}
