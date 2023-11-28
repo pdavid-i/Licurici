@@ -1,5 +1,7 @@
 using API.Data;
 using Microsoft.EntityFrameworkCore;
+using API.Middleware;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +24,10 @@ builder.Services.AddDbContext<MyDbContext>(opt => {
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
+// Add exception handler middleware
+app.UseMiddleware<ExceptionMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

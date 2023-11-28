@@ -6,9 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class WordsController : ControllerBase
+    public class WordsController : BaseApiController
     {
         private readonly MyDbContext _context;
         public WordsController(MyDbContext context)
@@ -32,13 +30,24 @@ namespace API.Controllers
             return Ok(word);
         }
 
-        [HttpGet("/today")]
+        [HttpGet("today")]
         public async Task<ActionResult<List<Word>>> GetWordOfTheDay()
         {
             var wordOfTheDayId = TimeHelper.CalculateTodaysWordId();
             var wordOfTheDay = await _context.Words.FindAsync(wordOfTheDayId);
 
             return Ok(wordOfTheDay);
+        }
+
+        [HttpGet("random")]
+        public async Task<ActionResult<List<Word>>> GetRandomWord()
+        {
+            Random generator = new Random();
+            var wordCount = await _context.Words.CountAsync();
+            var wordId = generator.Next(1, wordCount);
+            var word = await _context.Words.FindAsync(wordId);
+
+            return Ok(word);
         }
     }
 }
