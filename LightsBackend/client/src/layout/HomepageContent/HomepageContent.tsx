@@ -1,9 +1,11 @@
 import ExpandingButton from '../ExtendButton/ExpandingButton'
 import './HomepageContent.css'
 
-function HomepageContent({toggleGameVisibility} : any) {
+interface HomepageContentProps {
+    toggleGameVisibility: () => void;
+}
 
-
+function HomepageContent({toggleGameVisibility} : HomepageContentProps) {
     return (
         <div className='content'>
             <h1>Logos</h1>

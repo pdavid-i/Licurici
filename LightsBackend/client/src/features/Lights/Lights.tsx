@@ -1,7 +1,11 @@
 import './Lights.css'
 import Light from '../Light/Light'
 
-function Lights({toggleWordModal} : any) {
+interface LightsProps {
+    toggleWordModal: () => void
+}
+
+function Lights({toggleWordModal} : LightsProps) {
   return (
     <>
         <div className="lights">

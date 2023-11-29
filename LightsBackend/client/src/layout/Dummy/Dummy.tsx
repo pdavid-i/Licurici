@@ -1,5 +1,4 @@
 import agent from '../../api/agent'
-import {motion} from 'framer-motion'
 
 function Dummy() {
 

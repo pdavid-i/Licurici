@@ -3,10 +3,13 @@ import Focus from "../Focus/Focus";
 import "./Modal.css";
 import { useEffect, useState } from "react";
 import {Word} from "../../types/Word";
-import axios from "axios";
 import agent from "../../api/agent";
 
-const Modal = ({text, toggleWordModal} : any)  => {
+interface ModalProps {
+    toggleWordModal: () => void;
+}
+
+const Modal = ({ toggleWordModal} : ModalProps)  => {
 
     const [word, setWord] = useState<Word>();
 
@@ -58,7 +61,7 @@ const Modal = ({text, toggleWordModal} : any)  => {
     )
 }
 
-const WordMeaning = ({definition, example} : any) => {
+const WordMeaning = ({definition, example} : {definition: string, example: string}) => {
     return (
         <>
             <p className="definition">{definition}</p>

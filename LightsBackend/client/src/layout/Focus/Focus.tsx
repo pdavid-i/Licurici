@@ -1,7 +1,13 @@
 import { motion } from "framer-motion";
 import "./Focus.css";
+import { ReactNode } from "react";
 
-const Focus = ({children, toggleWordModal} : any)  => {
+interface FocusProps {
+    children: ReactNode,
+    toggleWordModal: () => void;
+}
+
+const Focus = ({children, toggleWordModal} : FocusProps)  => {
 
     return (
         <motion.div 

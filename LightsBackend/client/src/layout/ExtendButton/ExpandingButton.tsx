@@ -1,7 +1,12 @@
 import './ExpandingButton.css'
 import {motion} from 'framer-motion'
 
-function ExpandingButton({text, toggleGameVisibility} : any) {
+interface ExpandingButtonProps {
+    text: string
+    toggleGameVisibility: () => void
+}
+
+function ExpandingButton({text, toggleGameVisibility} : ExpandingButtonProps) {
 
     const delayedClose = () => {
         setTimeout(() => {
