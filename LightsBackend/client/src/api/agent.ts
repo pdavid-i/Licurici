@@ -49,10 +49,16 @@ const TestErrors = {
     getValidationError: () => requests.get('MockErrors/validation-error')
 }
 
+const Account = {
+    login: (data: object) => requests.post('Account/login', data),
+    register: (data: object) => requests.post('Account/register', data),
+    currentUser: () => requests.get('Account/current-user')
+}
 
 const agent = {
     Words,
-    TestErrors
+    TestErrors,
+    Account
 }
 
 export default agent;
