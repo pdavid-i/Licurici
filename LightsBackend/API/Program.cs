@@ -1,20 +1,74 @@
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using API.Middleware;
+using API.Entities;
+using Microsoft.AspNetCore.Identity;
+using API.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.OpenApi.Models;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container. - oredering not relevant
-
-
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c => 
+{
+    var jwtSecurityScheme = new OpenApiSecurityScheme
+    {
+        BearerFormat = "JWT",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = JwtBearerDefaults.AuthenticationScheme,
+        Description = "JWT Authorization header using the Bearer scheme.",
+        Reference = new OpenApiReference
+        {
+            Id = JwtBearerDefaults.AuthenticationScheme,
+            Type = ReferenceType.SecurityScheme
+        }
+    };
+
+    c.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            jwtSecurityScheme, Array.Empty<string>()
+        }
+    });
+});
 
 builder.Services.AddCors();
+
+// add Identity
+builder.Services.AddIdentityCore<User>(opt => 
+{
+    opt.User.RequireUniqueEmail = true;
+})
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<MyDbContext>();
+
+// add auth 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(opt => 
+    {
+        opt.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWTSettings:Key"])),
+        };
+    });
+
+builder.Services.AddAuthorization();
+// add JWT service
+builder.Services.AddScoped<TokenService>();
 
 // add ef to DI
 builder.Services.AddDbContext<MyDbContext>(opt => {
@@ -31,17 +85,21 @@ app.UseMiddleware<ExceptionMiddleware>();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c => 
+    {
+        c.ConfigObject.AdditionalItems.Add("persistAuthorization", "true");
+    });
 }
 
 var scope = app.Services.CreateScope();
 var context = scope.ServiceProvider.GetRequiredService<MyDbContext>();
+var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
 var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
 try
 {
-    context.Database.Migrate();
-    DbInitializer.Initialize(context);
+    await context.Database.MigrateAsync();
+    await DbInitializer.Initialize(context, userManager);
 }
 catch (Exception ex) { 
     logger.LogError(ex, "An error occurred while migrating or initializing the database.");
@@ -50,8 +108,6 @@ catch (Exception ex) {
 app.UseCors(opt => {
     opt.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
 });
-
-app.UseAuthorization();
 
 app.MapControllers();
 

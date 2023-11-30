@@ -1,10 +1,16 @@
 using API.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace API.Data
 {
     public class DbInitializer
     {
-        public static void Initialize(MyDbContext context) {
+        public static async Task Initialize(MyDbContext context, UserManager<User> userManager) {
+            InitializeWords(context);
+            await InitializeUsers(context, userManager);
+        }
+
+        public static void InitializeWords(MyDbContext context) {
             if (context.Words.Any()) return;
 
             var words = new List<Word> {
@@ -42,6 +48,28 @@ namespace API.Data
 
             context.Words.AddRange(words);
             context.SaveChanges();
+        }
+
+        public static async Task InitializeUsers(MyDbContext context, UserManager<User> userManager) {
+            if (userManager.Users.Any()) return;
+
+            var user = new User
+            {
+                UserName = "DaveDaBrave",
+                Email = "davedabrave@gmail.com"
+            };
+
+            await userManager.CreateAsync(user, "Manofmyworld123!");
+            await userManager.AddToRolesAsync(user, new[] {"Member", "Admin"});
+
+            var user2 = new User
+            {
+                UserName = "Johny",
+                Email = "johntho@gmail.com"
+            };
+
+            await userManager.CreateAsync(user2, "Manofmyworld123!");
+            await userManager.AddToRoleAsync(user2, "Member");
         }
     }
 }
