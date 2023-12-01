@@ -1,41 +1,81 @@
-import { ReactNode, createContext, useState } from "react"
+import { ReactNode, createContext, useEffect, useState } from "react"
 import { FieldValues } from 'react-hook-form';
 import agent from "../api/agent";
+import { toast } from "react-toastify";
+import { router } from "../router/Routes";
 
 interface UserContextProviderProps {
     children: ReactNode
 }
 
+interface UserDTO {
+  email: string,
+  token: string
+}
+
 interface UserContextType {
-    user: any | null;  // Replace UserType with the actual type of your user object
+    user: UserDTO | null;  // Replace UserType with the actual type of your user object
     isAuth: boolean;
     login: (data: FieldValues) => Promise<void>;
-    //logout: () => void;  // If you have a logout function
+    logout: () => void;  
   }
   
 const defaultContextValue: UserContextType = {
     user: null,
     isAuth: false,
     login: async () => {},  // Default no-op function
-    //logout: () => {}       // If you have a logout function
+    logout: () => {}
 };
+
+const refreshUser = async () => {
+    if (localStorage.getItem("jwt") === null)
+      return null;
+
+    let user = null;
+    try {
+     user = await agent.Account.currentUser();
+    } catch (err) {
+      console.log('JWT Token Refresh error.');
+    }
+    if (!user)
+    {
+      toast.error("Your session has expired. Please log in again.");
+      localStorage.removeItem("jwt");
+      router.navigate('/login');
+      return null;
+    }
+    return user;
+}
 
 export const UserContext = createContext(defaultContextValue);
 
 export const UserContextProvider = ({children} : UserContextProviderProps) => {
 
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState<UserDTO | null>(null);
     const [isAuth, setIsAuth] = useState(false);
     //const [newWordsCount, setNewWordsCount] = useState(0);
+
+    useEffect(() => {
+      // Call refreshUser and update the state accordingly
+      const initializeUser = async () => {
+        const refreshedUser = await refreshUser();
+        setUser(refreshedUser);
+        setIsAuth(!!refreshedUser);
+      };
+  
+      initializeUser();
+    }, []);
 
     const login = async (data: FieldValues) => {
         try {
           const response = await agent.Account.login(data);
-          console.log("Booyaa");
-          console.log(response);
-          if (response.status === 200) {
-            setUser(response.user);  // Assuming the response has a user object
+
+          if (response.token) {
+            console.log(response);
+            console.log("Ok set now the user to this tf");
+            setUser(response);  // Assuming the response has a user object
             setIsAuth(true);         // Set authentication status to true
+            localStorage.setItem('jwt', response.token);
           }
         } catch (error) {
           console.error('Login failed:', error);
@@ -43,7 +83,13 @@ export const UserContextProvider = ({children} : UserContextProviderProps) => {
         }
       };
 
+    const logout = () => {
+        localStorage.removeItem('jwt');
+        setUser(null);
+        setIsAuth(false);
+    };
+
     return (
-        <UserContext.Provider value={{user, isAuth, login}}> {children} </UserContext.Provider>
+        <UserContext.Provider value={{user, isAuth, login, logout}}> {children} </UserContext.Provider>
     )
 }

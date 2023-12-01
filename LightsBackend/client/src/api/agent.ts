@@ -3,17 +3,37 @@ import { toast } from "react-toastify";
 
 axios.defaults.baseURL = 'http://localhost:5000/api/'
 
+axios.interceptors.request.use(config => {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  }, error => {
+    return Promise.reject(error);
+  });
+
 axios.interceptors.response.use(async response => {
     return response;
 }, (error: AxiosError) => {
     console.log(error);
+    if (!error.response) return Promise.reject(error);
     const {data, status} = error.response as AxiosResponse;
     switch (status) {
         case 400:
+            if (data.errors) {
+                const modelStateErrors: string[] = [];
+                for (const key in data.errors) {
+                    if (data.errors[key]) {
+                        modelStateErrors.push(data.errors[key])
+                    }
+                }
+                throw modelStateErrors.flat();
+            }
             toast.error(data.title);
             break;
         case 401:
-            toast.error(data.title);
+            toast.error(data.title || 'Pula');
             break;
         case 403:
             toast.error(data.title);

@@ -1,18 +1,21 @@
 import React, { useContext, useState } from 'react';
-import agent from '../../api/agent';
 import './Login.css'
 import { FieldValues, useForm } from 'react-hook-form';
 import { UserContext } from '../../helpers/UserContextProvider';
 
 function Login() {
+
+   const {login} = useContext(UserContext);
    const {register, handleSubmit, formState: {isSubmitting, errors, isValid}} = useForm({ mode: 'onBlur'});
 
   async function submitLogin(data: FieldValues) {
     console.log(data)
-    await agent.Account.login(data);
+    login(data);
   }
 
   return (
+    <>
+    <h1>Log in</h1>
     <div className="login-form">
       <form onSubmit={handleSubmit(submitLogin)}>
         <div className="form-group">
@@ -20,6 +23,7 @@ function Login() {
           <input
             type="text"
             id="username"
+            autoFocus
             {...register('username', {
               required: 'Username is required'
             })}
@@ -40,6 +44,7 @@ function Login() {
         <button type="submit" disabled={!isValid}>Login</button>
       </form>
     </div>
+    </>
   );
 }
 
