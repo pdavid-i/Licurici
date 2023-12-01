@@ -1,26 +1,31 @@
-import React, { useContext, useState } from 'react';
+import { useContext } from 'react';
 import './Login.css'
 import { FieldValues, useForm } from 'react-hook-form';
 import { UserContext } from '../../helpers/UserContextProvider';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import LoadingButton from '../../layout/LoadingButton/LoadingButton';
 
 function Login() {
 
    const {login} = useContext(UserContext);
-   const {register, handleSubmit, formState: {isSubmitting, errors, isValid}} = useForm({ mode: 'onBlur'});
+   const {register, handleSubmit, formState: {isSubmitting, errors }} = useForm({ mode: 'onSubmit'});
+   const navigate = useNavigate();
+   const location = useLocation();
 
   async function submitLogin(data: FieldValues) {
-    console.log(data)
     login(data);
+    navigate(location.state?.from || '/');
   }
 
   return (
-    <>
-    <h1>Log in</h1>
+    <div className="login-container">
+    <h2 id="headline-label">Login</h2>
     <div className="login-form">
       <form onSubmit={handleSubmit(submitLogin)}>
         <div className="form-group">
-          <label htmlFor="username">Username:</label>
+          <label htmlFor="username">Nume utilizator:</label>
           <input
+            placeholder='utilizator'
             type="text"
             id="username"
             autoFocus
@@ -28,23 +33,27 @@ function Login() {
               required: 'Username is required'
             })}
           />
-          {errors.username && <p role="alert">{errors.username?.message?.toString()}</p>}
+          {errors.username && <div className="validation-error"><p role="alert">{errors.username?.message?.toString()}</p></div>}
         </div>
         <div className="form-group">
-          <label htmlFor="password">Password:</label>
+          <label htmlFor="password">Parolă:</label>
           <input
+            placeholder='parola'
             type="password"
             id="password"
             {...register('password',{
               required: 'Password is required'
             })}
           />
-          {errors.password && <p role="alert">{errors.password?.message?.toString()}</p>}
+          {errors.password && <div className="validation-error"><p role="alert">{errors.password?.message?.toString()}</p></div>}
         </div>
-        <button type="submit" disabled={!isValid}>Login</button>
+        <LoadingButton text='Login' isLoading={isSubmitting}/>
       </form>
+      <div className='bottom-links'>
+        <Link to='/register'> Creează cont </Link>
+      </div>
     </div>
-    </>
+    </div>
   );
 }
 

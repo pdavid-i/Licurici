@@ -1,15 +1,14 @@
-import React, { useContext, useState } from 'react';
 import './Register.css'
-import { FieldValues, useForm } from 'react-hook-form';
-import { UserContext } from '../../helpers/UserContextProvider';
+import { useForm } from 'react-hook-form';
 import agent from '../../api/agent';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import LoadingButton from '../../layout/LoadingButton/LoadingButton';
 
 function Register() {
     const navigate = useNavigate();
 
-   const {register, handleSubmit, setError, formState: {isSubmitting, errors, isValid}} = useForm({ mode: 'onBlur'});
+   const {register, handleSubmit, setError, formState: {isSubmitting, errors}} = useForm({ mode: 'onSubmit'});
 
    function handleApiErrors(errors: any) {
     console.log(errors);
@@ -25,11 +24,10 @@ function Register() {
         });
     }
 }
-
    
   return (
-    <>
-    <h1>Register</h1>
+    <div className="login-container">
+    <h2 id="headline-label" className="long-ahh-word">Înregistrare</h2>
     <div className="login-form">
       <form onSubmit={handleSubmit(async data => {
 
@@ -42,16 +40,16 @@ function Register() {
 
         } )}>
         <div className="form-group">
-          <label htmlFor="username">Username:</label>
+          <label htmlFor="username">Nume utilizator:</label>
           <input
             type="text"
             autoFocus
             id="username"
             {...register('username', {
-              required: 'Username is required'
+              required: 'Nu uita de nume'
             })}
           />
-          {errors.username && <p role="alert">{errors.username?.message?.toString()}</p>}
+          {errors.username && <div className="validation-error"><p role="alert" className="validation-error">{errors.username?.message?.toString()}</p></div>}
         </div>
         <div className="form-group">
           <label htmlFor="email">Email:</label>
@@ -62,31 +60,34 @@ function Register() {
               required: 'Email is required',
               pattern: {
                 value: /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,5})$/,
-                message: 'Not a valid email address'
+                message: 'Nu uita de email'
             }
             })}
           />
-          {errors.email && <p role="alert">{errors.email?.message?.toString()}</p>}
+          {errors.email && <div className="validation-error"><p role="alert" className="validation-error">{errors.email?.message?.toString()}</p></div>}
         </div>
         <div className="form-group">
-          <label htmlFor="password">Password:</label>
+          <label htmlFor="password">Parolă:</label>
           <input
             type="password"
             id="password"
             {...register('password',{
-              required: 'Password is required',
+              required: 'Nu uita de parolă',
               pattern: {
                 value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/,
                 message: 'Password does not meet complexity requirements'
             }
             })}
           />
-          {errors.password && <p role="alert">{errors.password?.message?.toString()}</p>}
+          {errors.password && <div className="validation-error"><p role="alert" className="validation-error">{errors.password?.message?.toString()}</p></div>}
         </div>
-        <button type="submit" disabled={!isValid}>Register</button>
+        <LoadingButton text='Creează cont' isLoading={isSubmitting}/>
       </form>
+      <div className='bottom-links'>
+        <Link to='/login' className="bottom-links"> Ai deja cont? </Link>
+      </div>
     </div>
-    </>
+    </div>
   );
 }
 

@@ -33,7 +33,7 @@ axios.interceptors.response.use(async response => {
             toast.error(data.title);
             break;
         case 401:
-            toast.error(data.title || 'Pula');
+            toast.error(data.title);
             break;
         case 403:
             toast.error(data.title);
