@@ -53,6 +53,7 @@ const responseBody = (response: AxiosResponse) => response.data;
 const requests = {
     get: (url: string) => axios.get(url).then(responseBody),
     post: (url: string, data: object) => axios.post(url, data).then(responseBody),
+    postNoBody: (url: string) => axios.post(url).then(responseBody),
     put: (url: string, data: object) => axios.put(url, data).then(responseBody),
     delete: (url: string) => axios.delete(url).then(responseBody)
 }
@@ -75,10 +76,19 @@ const Account = {
     currentUser: () => requests.get('Account/current-user')
 }
 
+const WordInteractions = {
+    mine: () => requests.get('WordInteractions/mine'),
+    new: (data: object) => requests.post('WordInteractions', data),
+    favorite: (wordId: number) => requests.postNoBody(`WordInteractions/favorite/${wordId}`),
+    isFavorite: (wordId: number) => requests.get(`WordInteractions/favorite/${wordId}`),
+    getFavorites: () => requests.get('WordInteractions/favorites'),
+}
+
 const agent = {
     Words,
     TestErrors,
-    Account
+    Account,
+    WordInteractions
 }
 
 export default agent;

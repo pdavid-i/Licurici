@@ -4,6 +4,7 @@ import "./Modal.css";
 import { useEffect, useState } from "react";
 import {Word} from "../../types/Word";
 import agent from "../../api/agent";
+import Heart from "../../features/Heart/Heart";
 
 interface ModalProps {
     toggleWordModal: () => void;
@@ -34,9 +35,27 @@ const Modal = ({ toggleWordModal} : ModalProps)  => {
 
     useEffect(() => {
         agent.Words.random()
-        .then(res => setWord(res))
+        .then(res => {
+            setWord(res)
+            // Prepare the interaction data
+            console.log('PULAAAA')
+
+                    console.log(res)
+
+            const interactionData = {
+                wordId: res.id,
+                favourite: res.favorite, // default value or based on user action
+                uses: [] // default value or based on user input
+            };
+    
+            // Record the interaction
+            agent.WordInteractions.new(interactionData)
+                .catch(err => console.log("Error recording interaction:", err.response));
+            
+        })
         .catch(err => console.log(err.response))
     }, [])
+
 
     return (
         <Focus toggleWordModal={toggleWordModal}>
@@ -48,7 +67,8 @@ const Modal = ({ toggleWordModal} : ModalProps)  => {
                 animate="visible"
                 exit="exit"
             >
-                <h3>{word?.name}</h3>
+               {word && <Heart id={word.id} />}
+                <h3 id="word-name">{word?.name}</h3>
                 <hr></hr>
                 <ul>
                     {word?.definitions.map((definition, index) => {

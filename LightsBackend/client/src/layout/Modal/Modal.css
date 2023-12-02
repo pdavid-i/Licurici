@@ -8,11 +8,12 @@
     opacity: 0.95;
 }
 
-h3 {
+#word-name {
    font-size: 3em; 
    color: white;
    margin-bottom: 20px;
    text-align: center;
+   margin-top: 0px
 }
 
 .example {
