@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace API.Controllers
 {
@@ -46,13 +45,6 @@ namespace API.Controllers
             };
             _context.Interactions.Add(interaction);
         }
-        else
-        {
-            // else just update the fields that could be changed
-            interaction.Uses = model.Uses;
-            interaction.Favourite = model.Favourite;
-            interaction.UpdatedAt = DateTime.UtcNow;
-        }
 
         await _context.SaveChangesAsync();
 
@@ -60,14 +52,18 @@ namespace API.Controllers
     }
 
     [HttpGet("mine")]
-    public async Task<ActionResult<IEnumerable<WordInteraction>>> GetUserWordInteractions()
+    public async Task<ActionResult<IEnumerable<WordItemDto>>> GetUserWordInteractions()
     {
         var user = await _userManager.FindByNameAsync(User.Identity.Name);
         var userId = user.Id;
 
         var wordInteractions = await _context.Interactions
-                                        .Include(wi => wi.Word)
                                         .Where(wi => wi.UserId == userId)
+                                        .Select(wi => new WordItemDto
+                                        {
+                                            Name = wi.Word.Name,
+                                            Id = wi.Word.Id,
+                                        })
                                         .ToListAsync();
 
         return Ok(wordInteractions);
@@ -105,6 +101,63 @@ namespace API.Controllers
 
         await _context.SaveChangesAsync();
         return Ok(interaction);
+    }
+
+    [HttpGet("favorite/{wordId}")]
+    public async Task<IActionResult> IsFavorite(int wordId)
+    {
+        var user = await _userManager.FindByNameAsync(User.Identity.Name);
+        var userId = user.Id;
+
+        var interaction = await _context.Interactions
+                                        .FirstOrDefaultAsync(wi => wi.WordId == wordId && wi.UserId == userId);
+
+        if (interaction == null)
+            return NotFound("User does not have this word yet.");
+
+        return Ok(interaction.Favourite);
+    }
+
+    [HttpGet("favorites")]
+    public async Task<IActionResult> GetFavorites()
+    {
+        var user = await _userManager.FindByNameAsync(User.Identity.Name);
+        var userId = user.Id;
+
+        var wordInteractions = await _context.Interactions
+                                        .Where(wi => wi.UserId == userId)
+                                        .Where(wi => wi.Favourite == true)
+                                        .Select(wi => new WordItemDto
+                                        {
+                                            Name = wi.Word.Name,
+                                            Id = wi.Word.Id,
+                                        })
+                                        .ToListAsync();
+
+        return Ok(wordInteractions);
+    }
+
+    [HttpDelete("deleteAll")]
+    public async Task<IActionResult> DeleteAllUserInteractions()
+    {
+        var user = await _userManager.FindByNameAsync(User.Identity.Name);
+        var userId = user.Id;
+
+        // Find all interactions for the user
+        var interactions = await _context.Interactions
+                                         .Where(wi => wi.UserId == userId)
+                                         .ToListAsync();
+
+        if (!interactions.Any())
+        {
+            return NotFound("No interactions found for the user.");
+        }
+
+        // Remove all interactions
+        _context.Interactions.RemoveRange(interactions);
+        await _context.SaveChangesAsync();
+
+        return Ok("All interactions deleted successfully.");
     }
 }
 
