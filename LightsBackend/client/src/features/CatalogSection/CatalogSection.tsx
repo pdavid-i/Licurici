@@ -10,7 +10,7 @@ export interface Word {
 }
 
 function CatalogSection() {
-    const [words, setWords] = useState<Word[]>();
+    const [words, setWords] = useState<Word[]>([]);
 
     useEffect(() => {
       agent.WordInteractions.mine()
@@ -23,7 +23,7 @@ function CatalogSection() {
     return (
     <Section>
         <h1>Catalog</h1>
-        <WordsContainer words={words} />
+        <WordsContainer words={words} totalCount={30}/>
     </Section>
   )
 }

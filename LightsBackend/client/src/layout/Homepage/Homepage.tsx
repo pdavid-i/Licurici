@@ -22,7 +22,7 @@ function Homepage() {
         <AnimatePresence
           initial={false}
         >
-          { showWordModal && <Modal toggleWordModal={toggleWordModal} />}
+          { showWordModal && <Modal toggleWordModal={toggleWordModal} wordId={undefined}/>}
         </AnimatePresence>
         { !gameStarted && <HomepageContent toggleGameVisibility={toggleGameVisibility} />}
         {/* interesting way to conditionally render a component*/}

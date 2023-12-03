@@ -6,11 +6,11 @@ interface SectionProps {
 }
 
 function Section({children} : SectionProps) {
-    return (
+    return <>
     <div className='section'>
         {children}
     </div>
-  )
+    </>
 }
 
 export default Section

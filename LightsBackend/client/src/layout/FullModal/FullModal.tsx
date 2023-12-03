@@ -1,19 +1,25 @@
 import { motion } from "framer-motion";
 import Focus from "../Focus/Focus";
-import "./Modal.css";
+import "./FullModal.css";
 import { useEffect, useState } from "react";
 import {Word} from "../../types/Word";
 import agent from "../../api/agent";
 import Heart from "../../features/Heart/Heart";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-interface ModalProps {
-    toggleWordModal: () => void;
-    wordId: number | undefined;
-}
+const FullModal = ()  => {
 
-const Modal = ({ toggleWordModal, wordId} : ModalProps)  => {
-
+    const {id} = useParams();
     const [word, setWord] = useState<Word>();
+
+    const navigate = useNavigate();
+    const location = useLocation();
+  
+    const redirectToPreviousPage = () => {
+      // Use the state from location to access the previous path
+      const previousPath = location.state?.from || '/defaultpath'; // Fallback to a default path
+      navigate(previousPath);
+    };
 
     const riseUp = {
         hidden: {
@@ -35,30 +41,19 @@ const Modal = ({ toggleWordModal, wordId} : ModalProps)  => {
     }
 
     useEffect(() => {
-        (wordId ? agent.Words.getWord(wordId) : agent.Words.random())
+        (agent.Words.getWord(id))
         .then(res => {
-            console.log('Faking hell')
+            console.log('dick')
+            console.log(id)
             console.log(res)
-            console.log(wordId)
             setWord(res)
-
-            const interactionData = {
-                wordId: res.id,
-                favourite: res.favorite,
-                uses: [] 
-            };
-    
-            // Record the interaction
-            agent.WordInteractions.new(interactionData)
-                .catch(err => console.log("Error recording interaction:", err.response));
-            
         })
         .catch(err => console.log(err.response))
     }, [])
 
 
     return (
-        <Focus toggleWordModal={toggleWordModal}>
+        <Focus toggleWordModal={redirectToPreviousPage}>
             <motion.div
                 onClick={(e) => e.stopPropagation()}
                 className="modal"
@@ -91,4 +86,4 @@ const WordMeaning = ({definition} : {definition: string}) => {
     )
 }
 
-export default Modal;
+export default FullModal;

@@ -3,6 +3,7 @@ import { UserContext } from '../../helpers/UserContextProvider'
 import Icons from '../../constants/Icons'
 
 import './Navbar.css'
+import NavbarItem from './NavbarItem';
 
 function Navbar() {
 
@@ -54,56 +55,9 @@ function AuthenticatedLinks() {
   const {logout} = useContext(UserContext);
 
   return <>
-          <li className="nav-item">
-      <a href="/profile" className="nav-link">
-        <svg
-          viewBox="0 0 512 512"
-        >
-          <g className="fa-group">
-            <path
-              fill="currentColor"
-              d={Icons.avatarFull}
-              className="fa-secondary"
-            ></path>
-          </g>
-        </svg>
-        <span className="link-text">Profil</span>
-      </a>
-    </li>
-
-        <li className="nav-item">
-      <a href="/catalog" className="nav-link">
-        <svg
-          viewBox="0 0 512 512"
-        >
-          <g className="fa-group">
-            <path
-              fill="currentColor"
-              d={Icons.book}
-              className="fa-secondary"
-            ></path>
-          </g>
-        </svg>
-        <span className="link-text">Catalog</span>
-      </a>
-    </li>
-
-    <li className="nav-item">
-      <a href="/favorites" className="nav-link">
-        <svg
-          viewBox="0 0 512 512"
-        >
-          <g className="fa-group">
-            <path
-              fill="currentColor"
-              d={Icons.heartEmpty}
-              className="fa-secondary"
-            ></path>
-          </g>
-        </svg>
-        <span className="link-text">Favorite</span>
-      </a>
-    </li>
+          <NavbarItem text='Profil' link='/profile' svgSource={Icons.avatarFull}/>
+          <NavbarItem text='Catalog' link='/catalog' svgSource={Icons.book}/>
+          <NavbarItem text='Favorite' link='/favorites' svgSource={Icons.heartEmpty}/>
 
     <li className="nav-item bottom-item">
       <a onClick={logout} href="#" className="nav-link">
@@ -126,23 +80,8 @@ function AuthenticatedLinks() {
 
 function UnauthenticatedLinks() {
   return <>
-      <li className="nav-item">
-        <a href="/login" className="nav-link">
-          <svg
-            viewBox="0 0 512 512"
-          >
-            <g className="fa-group">
-              <path
-                fill="currentColor"
-                d={Icons.avatarEmpty}
-                className="fa-secondary"
-              ></path>
-            </g>
-          </svg>
-          <span className="link-text">Log in</span>
-        </a>
-      </li>
+        <NavbarItem text='Login' link='/login' svgSource={Icons.avatarEmpty}/>
   </>
 }
 
-export default Navbar
+export default Navbar;

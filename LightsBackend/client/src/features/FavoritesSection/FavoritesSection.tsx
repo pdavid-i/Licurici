@@ -7,7 +7,7 @@ import WordsContainer from '../../layout/WordsContainer/WordsContainer';
 
 
 function FavoritesSection() {
-  const [words, setWords] = useState<Word[]>();
+  const [words, setWords] = useState<Word[]>([]);
 
   useEffect(() => {
     agent.WordInteractions.getFavorites()
@@ -20,7 +20,7 @@ function FavoritesSection() {
   return (
   <Section>
       <h1>Favorite</h1>
-      <WordsContainer words={words} />
+      <WordsContainer words={words} totalCount={-1}/>
   </Section>
 )
 }

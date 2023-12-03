@@ -1,4 +1,4 @@
-import ExpandingButton from '../ExtendButton/ExpandingButton'
+import ExpandingButton from '../ExpandingButton/ExpandingButton'
 import './HomepageContent.css'
 
 interface HomepageContentProps {
