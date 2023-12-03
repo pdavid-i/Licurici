@@ -11,14 +11,13 @@ namespace API.Controllers
         private readonly MyDbContext _context;
         public WordsController(MyDbContext context)
         {
-            this._context = context;
+            _context = context;
         }   
 
         [HttpGet]
         public async Task<ActionResult<List<Word>>> GetWords()
         {
             var words = await _context.Words.ToListAsync();
-
             return Ok(words);
         }
 
@@ -48,6 +47,24 @@ namespace API.Controllers
             var word = await _context.Words.FindAsync(wordId);
 
             return Ok(word);
+        }
+
+        [HttpDelete("wipeout")]
+        public async Task<ActionResult> Wipeout()
+        {
+        // Find all interactions for the user
+        var words = await _context.Words.ToListAsync();
+
+        if (!words.Any())
+        {
+            return NotFound("No interactions found for the user.");
+        }
+
+        // Remove all interactions
+        _context.Words.RemoveRange(words);
+        await _context.SaveChangesAsync();
+
+        return Ok("All words were removed.");
         }
     }
 }
