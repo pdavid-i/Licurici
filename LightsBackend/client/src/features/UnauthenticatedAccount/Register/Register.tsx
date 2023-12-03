@@ -1,9 +1,9 @@
-import './Register.css'
+import '../UnauthenticatedAccount.css'
 import { useForm } from 'react-hook-form';
-import agent from '../../api/agent';
+import agent from '../../../api/agent';
 import { toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom';
-import LoadingButton from '../../layout/LoadingButton/LoadingButton';
+import LoadingButton from '../../../layout/LoadingButton/LoadingButton';
 
 function Register() {
     const navigate = useNavigate();

@@ -7,6 +7,10 @@
       border: 2px white solid;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
+
+    .long-ahell-word {
+      font-size: 6em;
+    }
   
     .validation-error {
       background-color:rgb(197, 9, 9);

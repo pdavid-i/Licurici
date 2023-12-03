@@ -16,14 +16,14 @@ interface UserDTO {
 interface UserContextType {
     user: UserDTO | null;  // Replace UserType with the actual type of your user object
     isAuth: boolean;
-    login: (data: FieldValues) => Promise<void>;
+    login: (data: FieldValues) => Promise<boolean | undefined>;
     logout: () => void;  
   }
   
 const defaultContextValue: UserContextType = {
     user: null,
     isAuth: false,
-    login: async () => {},  // Default no-op function
+    login:  async () => false,  // Default no-op function
     logout: () => {}
 };
 
@@ -76,9 +76,11 @@ export const UserContextProvider = ({children} : UserContextProviderProps) => {
             setUser(response);  // Assuming the response has a user object
             setIsAuth(true);         // Set authentication status to true
             localStorage.setItem('jwt', response.token);
+            return true;
           }
         } catch (error) {
           console.error('Login failed:', error);
+          return false;
           // Handle login error (e.g., setting an error state, showing a message)
         }
       };

@@ -1,3 +1,5 @@
+using System.Web;
+using API.Data;
 using API.DTOs;
 using API.Entities;
 using API.Helpers;
@@ -5,6 +7,7 @@ using API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -13,12 +16,15 @@ namespace API.Controllers
         private readonly UserManager<User> _userManager;
         private readonly TokenService _tokenService;
         private readonly EmailService _emailService;
+        private readonly MyDbContext _context;
 
-        public AccountController(UserManager<User> userManager, TokenService tokenService, EmailService emailService)
+
+        public AccountController(UserManager<User> userManager, TokenService tokenService, EmailService emailService, MyDbContext dbContext)
         {
             _userManager = userManager;
             _tokenService = tokenService;
             _emailService = emailService;
+            _context = dbContext;
         }
 
         [HttpPost("login")]
@@ -71,28 +77,55 @@ namespace API.Controllers
         }
 
         [HttpPost("forgot-password")]
-        public async Task<IActionResult> ForgotPassword(string email)
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordDto model)
         {
-            var user = await _userManager.FindByEmailAsync(email);
-            var pula = "mea";
+            var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null) return BadRequest("User not found.");
 
+            // Check for existing, unexpired tokens
+            var existingToken = await _context.Tokens
+            .FirstOrDefaultAsync(t => t.Email == model.Email && t.CreationTime.AddHours(24) > DateTime.UtcNow);
+            if (existingToken != null)
+            {
+                return BadRequest("Un email activ a fost deja trimis pentru aceasta adresa. Daca s-a pierdut, incearca mai tarziu.");
+            }
+
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            string encodedToken = HttpUtility.UrlEncode(token);
 
-            await _emailService.SendEmailResetPasswordAsync(email, token);
+               _context.Tokens.Add(new PasswordResetToken 
+                { 
+                    Email = model.Email, 
+                    Token = token, 
+                    CreationTime = DateTime.UtcNow
+                });
+            await _context.SaveChangesAsync();
+            await _emailService.SendEmailResetPasswordAsync(model.Email, encodedToken);
 
-            return Ok(token);
+            return Ok();
         }
 
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword(ResetPasswordDto model)
         {
-            var user = await _userManager.FindByEmailAsync(model.Email);
+            var existingToken = await _context.Tokens
+            .FirstOrDefaultAsync(t => t.Token == model.Token && t.CreationTime.AddHours(24) > DateTime.UtcNow);
+            if (existingToken == null)
+            {
+                return BadRequest("Invalid or expired token");
+            }
+
+            var email = existingToken.Email;
+
+            var user = await _userManager.FindByEmailAsync(email);
             if (user == null) return BadRequest("User not found.");
 
-            var result = await _userManager.ResetPasswordAsync(user, model.Token, model.NewPassword);
+            var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
             if (!result.Succeeded) return BadRequest("Password reset failed.");
 
+            var removeTokens = await _context.Tokens.Where(t => t.Email == email).ToListAsync();
+            _context.Tokens.RemoveRange(removeTokens);
+            await _context.SaveChangesAsync();
             return Ok("Password was reset succesfuly");
         }
     }

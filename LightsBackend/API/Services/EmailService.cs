@@ -32,9 +32,9 @@ namespace API.Helpers
             body.AppendLine("Acceseaza urmatorul link pentru resetarea parolei:");
             body.AppendLine("Click aici");
 
-            htmlBody.AppendLine("<p>Salut! Ai primit acest link pentru ca cineva a initiat resetarea parolei pentru contul tau din aplicatia Logos.</p>");
+            htmlBody.AppendLine("<p>Saluti! Ai primit acest link pentru ca cineva a initiat resetarea parolei pentru contul tau din aplicatia Logos.</p>");
             htmlBody.AppendLine("<p>Acceseaza urmatorul link pentru resetarea parolei: </p>");
-            htmlBody.AppendLine($"<a href='youtube.com/{token}'>Click aici</a> ");
+            htmlBody.AppendLine($"<a href='http://localhost:3000/reset-password/{token}'>Click aici</a> ");
 
             await SendEmailAsync(toEmail, subject, body.ToString(), htmlBody.ToString());
         }   

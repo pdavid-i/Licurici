@@ -1,9 +1,9 @@
 import { useContext } from 'react';
-import './Login.css'
+import '../UnauthenticatedAccount.css'
 import { FieldValues, useForm } from 'react-hook-form';
-import { UserContext } from '../../helpers/UserContextProvider';
+import { UserContext } from '../../../helpers/UserContextProvider';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import LoadingButton from '../../layout/LoadingButton/LoadingButton';
+import LoadingButton from '../../../layout/LoadingButton/LoadingButton';
 
 function Login() {
 
@@ -13,8 +13,12 @@ function Login() {
    const location = useLocation();
 
   async function submitLogin(data: FieldValues) {
-    login(data);
-    navigate(location.state?.from || '/');
+    login(data)
+    .then(res => {
+      if (res)
+        navigate(location.state?.from || '/')
+    })
+    .catch(err => console.log(err.response))
   }
 
   return (
@@ -51,6 +55,8 @@ function Login() {
       </form>
       <div className='bottom-links'>
         <Link to='/register'> Creează cont </Link>
+        <br></br>
+        <Link to='/forgot-password'> Ai uitat parola? </Link>
       </div>
     </div>
     </div>

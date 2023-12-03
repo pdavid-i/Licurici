@@ -16,11 +16,11 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(async response => {
     return response;
 }, (error: AxiosError) => {
-    console.log(error);
     if (!error.response) return Promise.reject(error);
     const {data, status} = error.response as AxiosResponse;
     switch (status) {
         case 400:
+
             if (data.errors) {
                 const modelStateErrors: string[] = [];
                 for (const key in data.errors) {
@@ -30,7 +30,7 @@ axios.interceptors.response.use(async response => {
                 }
                 throw modelStateErrors.flat();
             }
-            toast.error(data.title);
+            toast.error(data.title? data.title : data);
             break;
         case 401:
             toast.error(data.title);
@@ -73,7 +73,9 @@ const TestErrors = {
 const Account = {
     login: (data: object) => requests.post('Account/login', data),
     register: (data: object) => requests.post('Account/register', data),
-    currentUser: () => requests.get('Account/current-user')
+    currentUser: () => requests.get('Account/current-user'),
+    forgotPassword: (data: object) => requests.post('Account/forgot-password', data),
+    resetPassword: (data: object) => requests.post('Account/reset-password', data),
 }
 
 const WordInteractions = {

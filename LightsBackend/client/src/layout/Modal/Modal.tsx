@@ -37,10 +37,6 @@ const Modal = ({ toggleWordModal} : ModalProps)  => {
         agent.Words.random()
         .then(res => {
             setWord(res)
-            // Prepare the interaction data
-            console.log('PULAAAA')
-
-                    console.log(res)
 
             const interactionData = {
                 wordId: res.id,
@@ -72,8 +68,9 @@ const Modal = ({ toggleWordModal} : ModalProps)  => {
                 <hr></hr>
                 <ul>
                     {word?.definitions.map((definition, index) => {
-                        return <li key={index}><WordMeaning definition={definition} example={word.examples[index]} /></li>;
+                        return <li key={index}><WordMeaning definition={definition} /></li>;
                     })}
+                    <p className="example"><i>{word?.examples[0]}</i></p>
                 </ul>
 
             </motion.div>
@@ -81,11 +78,10 @@ const Modal = ({ toggleWordModal} : ModalProps)  => {
     )
 }
 
-const WordMeaning = ({definition, example} : {definition: string, example: string}) => {
+const WordMeaning = ({definition} : {definition: string}) => {
     return (
         <>
             <p className="definition">{definition}</p>
-            <p className="example"><i>{example}</i></p>
         </>
     )
 }
