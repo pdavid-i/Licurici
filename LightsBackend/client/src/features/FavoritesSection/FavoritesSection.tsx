@@ -3,6 +3,7 @@ import Section from '../../layout/Section/Section'
 import { useState, useEffect } from 'react';
 import agent from '../../api/agent';
 import { Word } from '../../types/Word';
+import WordsContainer from '../../layout/WordsContainer/WordsContainer';
 
 
 function FavoritesSection() {
@@ -19,11 +20,7 @@ function FavoritesSection() {
   return (
   <Section>
       <h1>Favorite</h1>
-      <ul className="word-list">
-        {words?.map(word => (
-          <li key={word.id}>{word.name}</li>
-        ))}
-      </ul>
+      <WordsContainer words={words} />
   </Section>
 )
 }

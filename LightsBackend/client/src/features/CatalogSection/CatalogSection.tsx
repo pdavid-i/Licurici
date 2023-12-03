@@ -2,8 +2,9 @@ import './CatalogSection.css'
 import Section from '../../layout/Section/Section'
 import { useEffect, useState } from 'react';
 import agent from '../../api/agent';
+import WordsContainer from '../../layout/WordsContainer/WordsContainer';
 
-interface Word {
+export interface Word {
   name: string
   id: number
 }
@@ -22,11 +23,7 @@ function CatalogSection() {
     return (
     <Section>
         <h1>Catalog</h1>
-        <ul className="word-list">
-          {words?.map(word => (
-            <li key={word.id}>{word.name}</li>
-          ))}
-        </ul>
+        <WordsContainer words={words} />
     </Section>
   )
 }
