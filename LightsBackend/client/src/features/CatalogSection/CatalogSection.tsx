@@ -1,8 +1,10 @@
 import './CatalogSection.css'
 import Section from '../../layout/Section/Section'
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import agent from '../../api/agent';
 import WordsContainer from '../../layout/WordsContainer/WordsContainer';
+import Modal from '../../layout/Modal/Modal';
+import { ModalContext } from '../../helpers/ModalContextProvider';
 
 export interface Word {
   name: string
@@ -10,6 +12,7 @@ export interface Word {
 }
 
 function CatalogSection() {
+
     const [words, setWords] = useState<Word[]>([]);
 
     useEffect(() => {

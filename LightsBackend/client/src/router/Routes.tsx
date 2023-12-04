@@ -10,7 +10,6 @@ import ProfileSection from "../features/Profile/ProfileSection";
 import FavoritesSection from "../features/FavoritesSection/FavoritesSection";
 import ForgotPassword from "../features/UnauthenticatedAccount/ForgotPassword/ForgotPassword";
 import ResetPassword from "../features/UnauthenticatedAccount/ResetPassword/ResetPassword";
-import FullModal from "../layout/FullModal/FullModal";
 
 export const router = createBrowserRouter([
     {
@@ -30,11 +29,9 @@ export const router = createBrowserRouter([
                     {path: '/erori', element: <Dummy />},
                     {path: '/profile', element: <ProfileSection />},
                     {path: '/favorites', element: <FavoritesSection />},
-                    {path: '/catalog', element: <CatalogSection />},
-                    {path: '/word/:id', element: <FullModal />},
+                    {path: '/catalog', element: <CatalogSection />}
                 ]
             }, 
-            {path: '/word/:id', element: <FullModal />},
             {path: '', element: <Homepage />},
             {path: '/register', element: <Register />},
         ]

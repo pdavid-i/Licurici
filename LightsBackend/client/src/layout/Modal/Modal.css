@@ -47,3 +47,7 @@ hr::after {
     position: relative;
     background: rgb(3, 3, 105);
 }
+
+ul li{
+    color:white;
+}
