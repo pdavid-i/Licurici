@@ -87,11 +87,16 @@ const WordInteractions = {
     getFavorites: () => requests.get('WordInteractions/favorites'),
 }
 
+const Profile = {
+    getProfile : () => requests.get('/Profile/current-profile')
+}
+
 const agent = {
     Words,
     TestErrors,
     Account,
-    WordInteractions
+    WordInteractions,
+    Profile
 }
 
 export default agent;
