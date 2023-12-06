@@ -71,8 +71,6 @@ export const UserContextProvider = ({children} : UserContextProviderProps) => {
           const response = await agent.Account.login(data);
 
           if (response.token) {
-            console.log(response);
-            console.log("Ok set now the user to this tf");
             setUser(response);  // Assuming the response has a user object
             setIsAuth(true);         // Set authentication status to true
             localStorage.setItem('jwt', response.token);

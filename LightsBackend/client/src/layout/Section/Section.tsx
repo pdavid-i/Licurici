@@ -8,7 +8,7 @@ interface SectionProps {
 }
 
 function Section({children} : SectionProps) {
-    const { wordId, setWordId, showWordModal, setShowModal, toggleWordModal } = useContext(ModalContext);
+    const { wordId, showWordModal, toggleWordModal } = useContext(ModalContext);
 
     return <>
     {showWordModal && <Modal toggleWordModal={toggleWordModal} wordId={wordId}/>}

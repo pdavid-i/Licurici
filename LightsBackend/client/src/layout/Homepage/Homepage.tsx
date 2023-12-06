@@ -1,20 +1,17 @@
 import Lights from '../../features/Lights/Lights'
 import './Homepage.css'
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import HomepageContent from '../HomepageContent/HomepageContent';
 import Modal from '../Modal/Modal';
 import { AnimatePresence } from 'framer-motion'
+import { ModalContext } from '../../helpers/ModalContextProvider';
 
 function Homepage() {
   const [gameStarted, setGameStarted] = useState(false);
-  const [showWordModal, setShowWordModal] = useState(false);
+  const { showWordModal, toggleWordModal } = useContext(ModalContext);
 
   const toggleGameVisibility = () => {
     setGameStarted(!gameStarted);
-  };
-
-  const toggleWordModal = () => {
-    setShowWordModal(!showWordModal);
   };
 
     return (
@@ -25,8 +22,7 @@ function Homepage() {
           { showWordModal && <Modal toggleWordModal={toggleWordModal} wordId={undefined}/>}
         </AnimatePresence>
         { !gameStarted && <HomepageContent toggleGameVisibility={toggleGameVisibility} />}
-        {/* interesting way to conditionally render a component*/}
-        { gameStarted && <Lights  toggleWordModal={toggleWordModal}/>}
+        { gameStarted && <Lights/> }
     </>
   )
 }
