@@ -118,15 +118,15 @@ namespace API.Data
                 }, 
                 new Word {
                     Id = 18,
-                    Name = "a ebluisa",
-                    Definitions = ["a întuneca vederea, a orbi, a lua ochii (datorită unei străluciri prea mari)", "2. a uimi, a surprinde, a ului."],
-                    Examples = ["Când a ieșit pe scenă a ebluisat întregul public."]          
+                    Name = "argou",
+                    Definitions = ["limbaj specific folosit de vagabonzi, infractori, etc. pentru a nu fi înțeleși de restul societății"],
+                    Examples = ["Nu știu despre ce sticleți vorbeau, doar e mijlocul lui iulie?! Mă depășește argoul ăsta."]         
                 }, 
                 new Word {
                     Id = 19,
                     Name = "alegorie",
                     Definitions = ["Procedeu artistic constând în exprimarea unei idei abstracte prin mijloace concrete."],
-                    Examples = ["Acest tablou e o alegorie excelentă a luptei omului cu  vieții."]          
+                    Examples = ["Acest tablou e o alegorie excelentă a luptei omului cu greutățile vieții."]          
                 }, 
                 new Word {
                     Id = 20,
