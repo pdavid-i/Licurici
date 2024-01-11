@@ -1,0 +1,38 @@
+.profileSection {
+    padding: 40px;
+}
+
+.profileSection p{
+    margin: 15px;
+}
+
+.random {
+    text-align: right;
+}
+
+.row {
+    max-height: 55%; /* Maximum height before scrolling */
+    overflow: auto; /* Makes the container scrollable */
+    display: flex; /* Using Flexbox for layout */
+    flex-wrap: wrap; /* Allows items to wrap to the next line */
+}
+
+.cell {
+    flex: 1; /* Each cell takes equal space */
+}
+
+@media screen and (max-width: 800px) {
+    .row {
+        flex-direction: column; /* Stack the cells vertically */
+    }
+
+    .cell {
+        width: 100%; /* Each cell takes full width */
+    }
+}
+
+@media only screen and (min-width: 1280px) {
+    .section {
+        width: 60%;
+    }
+  }

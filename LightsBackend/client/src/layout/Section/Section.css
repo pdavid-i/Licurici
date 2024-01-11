@@ -1,8 +1,16 @@
 .section {
-    background-color: #000031f8;
-    width: 80%;
-    height: 85%;
+    background-color: #05053b;
+    height:80%;
+    max-height: 85%;
+    max-width: 80%;
     margin: auto;
-    margin-right: 12%;
+    margin-top: 6%;
     border-radius: 20px;
+}
+
+.sectionHeadline {
+    color: whitesmoke;
+    font-size: 60px;
+    margin-bottom: 15px;
+    margin-top: 0px;
 }

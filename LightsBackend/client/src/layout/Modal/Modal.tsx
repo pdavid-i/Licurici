@@ -37,9 +37,6 @@ const Modal = ({ toggleWordModal, wordId} : ModalProps)  => {
     useEffect(() => {
         (wordId ? agent.Words.getWord(wordId) : agent.Words.random())
         .then(res => {
-            console.log('Faking hell')
-            console.log(res)
-            console.log(wordId)
             setWord(res)
 
             const interactionData = {
