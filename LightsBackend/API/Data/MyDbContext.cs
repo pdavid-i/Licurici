@@ -14,6 +14,8 @@ namespace API.Data
         public DbSet<Word> Words { get; set; }
         public DbSet<WordInteraction> Interactions { get; set; }
         public DbSet<PasswordResetToken> Tokens {get; set;}
+        public DbSet<Thought> Thoughts {get; set;}
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

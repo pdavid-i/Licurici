@@ -3,20 +3,20 @@ using API.Data;
 using API.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
-    public class WordsController : BaseApiController
+    public class WordsController(MyDbContext context) : BaseApiController
     {
-        private readonly MyDbContext _context;
-        public WordsController(MyDbContext context)
-        {
-            _context = context;
-        }   
+        private readonly MyDbContext _context = context;
 
         [HttpGet]
         public async Task<ActionResult<List<Word>>> GetWords()
         {
+            if (!_context.Words.Any()) 
+                return NoContent();
+
             var words = await _context.Words.ToListAsync();
             return Ok(words);
         }
@@ -41,30 +41,33 @@ namespace API.Controllers
         [HttpGet("random")]
         public async Task<ActionResult<List<Word>>> GetRandomWord()
         {
+            if (!_context.Words.Any()) 
+                return NoContent();
+
             Random generator = new Random();
             var wordCount = await _context.Words.CountAsync();
-            var wordId = generator.Next(1, wordCount);
+
+            var wordId = generator.Next(1, wordCount+1);
             var word = await _context.Words.FindAsync(wordId);
 
             return Ok(word);
         }
 
+        [Authorize]
         [HttpDelete("wipeout")]
         public async Task<ActionResult> Wipeout()
         {
-        // Find all interactions for the user
-        var words = await _context.Words.ToListAsync();
+            var words = await _context.Words.ToListAsync();
 
-        if (!words.Any())
-        {
-            return NotFound("No interactions found for the user.");
-        }
+            if (!words.Any())
+            {
+                return NotFound("No words were found.");
+            }
 
-        // Remove all interactions
-        _context.Words.RemoveRange(words);
-        await _context.SaveChangesAsync();
+            _context.Words.RemoveRange(words);
+            await _context.SaveChangesAsync();
 
-        return Ok("All words were removed.");
+            return Ok("All words were removed.");
         }
     }
 }

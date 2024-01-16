@@ -7,7 +7,8 @@ namespace API.Data
     {
         public static async Task Initialize(MyDbContext context, UserManager<User> userManager) {
             InitializeWords(context);
-            await InitializeUsers(context, userManager);
+            InitializeThoughts(context);
+            await InitializeUsers(userManager);
         }
 
         public static void InitializeWords(MyDbContext context) {
@@ -200,7 +201,7 @@ namespace API.Data
             context.SaveChanges();
         }
 
-        public static async Task InitializeUsers(MyDbContext context, UserManager<User> userManager) {
+        public static async Task InitializeUsers(UserManager<User> userManager) {
             if (userManager.Users.Any()) return;
 
             var user = new User
@@ -220,6 +221,29 @@ namespace API.Data
 
             await userManager.CreateAsync(user2, "Manofmyworld123!");
             await userManager.AddToRoleAsync(user2, "Member");
+        }
+
+        public static void InitializeThoughts(MyDbContext context)
+        {
+            if (context.Thoughts.Any()) return;
+
+            var thoughts = new List<Thought> {
+                new Thought {
+                    Id = 1,
+                    Content = "Oare nisipul#e de fapt#multe pietre#mici?"
+                },
+                new Thought {
+                    Id = 2,
+                    Content = "Dar bratul#nu-ti e asa puternic,#precum e visul#de inalt."
+                },
+                new Thought {
+                    Id = 3,
+                    Content = "Auzi bre#cat ridici la piept?#Cat trebuie,#boss."
+                },
+            };
+
+            context.Thoughts.AddRange(thoughts);
+            context.SaveChanges();
         }
     }
 }
