@@ -91,12 +91,17 @@ const Profile = {
     getProfile : () => requests.get('/Profile/current-profile')
 }
 
+const Thoughts = {
+    random : () => requests.get('/Thoughts/random')
+}
+
 const agent = {
     Words,
     TestErrors,
     Account,
     WordInteractions,
-    Profile
+    Profile, 
+    Thoughts
 }
 
 export default agent;

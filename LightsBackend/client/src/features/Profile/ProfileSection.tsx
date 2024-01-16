@@ -2,6 +2,7 @@ import './ProfileSection.css'
 import Section from '../../layout/Section/Section'
 import { useEffect, useState } from 'react';
 import { Profile } from '../../types/Profile';
+import { Thought } from '../../types/Thought';
 import agent from '../../api/agent';
 
 const defaultProfileInfo : Profile = {
@@ -13,8 +14,16 @@ const defaultProfileInfo : Profile = {
   profilePicture: ''
 }
 
+const defaultThoughtChunks : Thought = {
+  firstFragment: 'Not',
+  secondFragment: 'a thought',
+  thirdFragment: 'behind those',
+  forthFragment: 'eyes'
+}
+
 function ProfileSection() {
   const [profile, setProfile] = useState<Profile>(defaultProfileInfo);
+  const [thought, setThought] = useState<Thought>(defaultThoughtChunks);
 
   useEffect(() => {
     agent.Profile.getProfile()
@@ -22,6 +31,20 @@ function ProfileSection() {
         setProfile(res)          
     })
     .catch(err => console.log(err.response))
+  }, [])
+
+  useEffect(() => {
+    agent.Thoughts.random()
+    .then(res => {
+      const contentParts = res.content.split('#');
+      setThought({
+        firstFragment: contentParts[0] || '',
+        secondFragment: contentParts[1] || '',
+        thirdFragment: contentParts[2] || '',
+        forthFragment: contentParts[3] || ''
+      });   
+     })
+    .catch(err => console.log(err))
   }, [])
 
     return (
@@ -38,11 +61,10 @@ function ProfileSection() {
               <p>Cuvinte favorite: {profile.favoriteWordsCount}</p>
             </div>
             <div className='random cell'>
-              <p>Oare</p>
-              <p>nisipul</p>
-              <p>e de fapt</p>
-              <p>multe pietre</p>
-              <p>mici?</p>
+              <p>{thought.firstFragment}</p>
+              <p>{thought.secondFragment}</p>
+              <p>{thought.thirdFragment}</p>
+              <p>{thought.forthFragment}</p>
             </div>      
           </div>
         </div>
