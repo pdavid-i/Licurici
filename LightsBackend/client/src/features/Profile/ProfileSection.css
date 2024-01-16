@@ -1,5 +1,7 @@
 .profileSection {
     padding: 40px;
+    max-height: 85%; 
+    overflow-y: auto; 
 }
 
 .profileSection p{
