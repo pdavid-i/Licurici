@@ -12,9 +12,7 @@ function App() {
       <ModalContextProvider>
         <Navbar />
         <ToastContainer className="toaster-messages" position="bottom-right" hideProgressBar theme="colored"/>
-        <div className="hero">
           <Outlet />
-        </div>
       </ModalContextProvider>
     </UserContextProvider>
   )
