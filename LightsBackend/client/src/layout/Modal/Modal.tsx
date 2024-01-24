@@ -24,13 +24,16 @@ const Modal = ({ toggleWordModal, wordId} : ModalProps)  => {
             opacity: 1,
             y: "0",
             transition: {
-                duration: 0.5,
-                ease: "easeInOut"
+                duration: 0.8,
+                ease: "easeOut"
             }
         },
         exit: {
             opacity: 0,
-            y: "-100vh"
+            y: "-30vh",
+            transition: {
+                ease: "easeIn"
+            }
         }
     }
 
