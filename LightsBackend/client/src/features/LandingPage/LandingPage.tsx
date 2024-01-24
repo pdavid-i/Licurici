@@ -1,7 +1,7 @@
-import './NewPage.css'
-import Paralax from '../../layout/Parallax/Parallax'
+import './LandingPage.css'
+import Paralax from './Parallax'
 
-function App() {
+function LandingPage() {
 
   return (
     <>
@@ -16,4 +16,4 @@ function App() {
   )
 }
 
-export default App
+export default LandingPage
