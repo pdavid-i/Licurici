@@ -18,6 +18,8 @@ function Parallax() {
     const copy = useRef(null);
     const btn = useRef(null);
 
+    const isMobile = window.innerWidth <= 768
+
     useEffect(() => {
         let ctx = gsap.context(() => {
             gsap.registerPlugin(ScrollTrigger);
@@ -58,7 +60,7 @@ function Parallax() {
             tl.to(
                 stars.current,
                 {
-                    top: 0,
+                    top: 10,
                 },
                 0.5
             );
@@ -89,14 +91,14 @@ function Parallax() {
             tl.to(
                 sun.current,
                 {
-                    y: "+=235",
+                    y: isMobile ? "+210%" : "+60%",
                 },
                 0
             );
             tl.to(
                 copy.current,
                 {
-                    y: "-120%",
+                    y: isMobile ? "-240%" : "-120%",
                     opacity: 1,
                     ease: "power4.easeIn"
                 },
