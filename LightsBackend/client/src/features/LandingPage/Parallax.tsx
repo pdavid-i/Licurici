@@ -18,9 +18,23 @@ function Parallax() {
     const copy = useRef(null);
     const btn = useRef(null);
 
-    const isMobile = window.innerWidth <= 768
+    const [sunY, textY] = computeDisplacement();
+
+    function computeDisplacement() {
+        if (window.innerWidth > 2400) {
+            return ["+10%", "-140%"]
+        } else if (window.innerWidth > 1600) {
+            return ["+120%", "-160%"]
+        } else if (window.innerWidth > 1200) {
+            return ["+180%", "-200%"]
+        } else {
+            return ["+210%", "-260%"];
+        }
+    }
 
     useEffect(() => {
+        console.log('what the fuck')
+        console.log(sunY + ' asta i Sonny si amu '+ textY )
         let ctx = gsap.context(() => {
             gsap.registerPlugin(ScrollTrigger);
             var tl = gsap.timeline({
@@ -91,14 +105,14 @@ function Parallax() {
             tl.to(
                 sun.current,
                 {
-                    y: isMobile ? "+210%" : "+60%",
+                    y: `+${window.innerHeight/2}`
                 },
                 0
             );
             tl.to(
                 copy.current,
                 {
-                    y: isMobile ? "-240%" : "-120%",
+                    y: `-${window.innerHeight/2}`,
                     opacity: 1,
                     ease: "power4.easeIn"
                 },
@@ -114,6 +128,8 @@ function Parallax() {
         });
         return () => ctx.revert();
     }, []);
+
+    
 
     return (
         <div className="parallax-outer">
