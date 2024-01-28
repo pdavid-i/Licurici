@@ -23,8 +23,11 @@ function CatalogSection() {
   
     return (
     <Section>
-        <h1>Catalog</h1>
+      <div className='innerSection'>
+        <h1 id='catalogHeadline'>Catalog</h1>
+        <hr></hr>
         <WordsContainer words={words} totalCount={30}/>
+      </div>
     </Section>
   )
 }

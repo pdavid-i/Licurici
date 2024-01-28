@@ -19,8 +19,10 @@ function FavoritesSection() {
 
   return (
   <Section>
-      <h1>Favorite</h1>
+    <div className='innerSection'>
+      <h1 className='sectionHeadline'>Favorite</h1>
       <WordsContainer words={words} totalCount={-1}/>
+    </div>
   </Section>
 )
 }

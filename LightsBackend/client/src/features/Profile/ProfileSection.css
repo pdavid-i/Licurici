@@ -1,5 +1,5 @@
 .profileSection {
-    padding: 40px;
+    padding: 80px;
     max-height: 85%; 
     overflow-y: auto; 
 }
@@ -13,23 +13,23 @@
 }
 
 .row {
-    max-height: 55%; /* Maximum height before scrolling */
-    overflow: auto; /* Makes the container scrollable */
-    display: flex; /* Using Flexbox for layout */
-    flex-wrap: wrap; /* Allows items to wrap to the next line */
+    max-height: 55%; 
+    overflow: auto; 
+    display: flex; 
+    flex-wrap: wrap; 
 }
 
 .cell {
-    flex: 1; /* Each cell takes equal space */
+    flex: 1; 
 }
 
 @media screen and (max-width: 800px) {
     .row {
-        flex-direction: column; /* Stack the cells vertically */
+        flex-direction: column; 
     }
 
     .cell {
-        width: 100%; /* Each cell takes full width */
+        width: 100%; 
     }
 }
 

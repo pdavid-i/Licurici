@@ -8,8 +8,12 @@
     overflow: hidden;
 }
 
-#new-hero {
+#profile-hero {
     background-image: url(../assets/bg_lighthouse.png);
+}
+
+#list-hero {
+    background-image: url(../assets/bg_sunset.png);
     background-size: cover;
 }
 

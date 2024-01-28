@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { UserContext } from '../../helpers/UserContextProvider'
 import Icons from '../../constants/Icons'
+import { useLocation } from 'react-router-dom';
 
 import './Navbar.css'
 import NavbarItem from './NavbarItem';
@@ -8,7 +9,12 @@ import NavbarItem from './NavbarItem';
 function Navbar() {
 
   const {isAuth} = useContext(UserContext);
+  const location = useLocation();
 
+  if (location.pathname == '/') {
+    return null;
+  }
+  
   return (
     <>
  <nav className="navbar">

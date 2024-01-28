@@ -19,23 +19,22 @@ export const router = createBrowserRouter([
         children: [
             {element: <AuthConditionalRoute auth={false}/>, children: 
                 [
-                    {path: '/register', element: <Register />},
-                    {path: '/login', element: <Login />},
-                    {path: '/forgot-password/', element: <ForgotPassword />},
-                    {path: '/reset-password/:token', element: <ResetPassword />}
+                    {path: '/register', element: <div className="hero"><Register /></div>},
+                    {path: '/login', element: <div className="hero"><Login /></div>},
+                    {path: '/forgot-password/', element: <div className="hero"><ForgotPassword /></div>},
+                    {path: '/reset-password/:token', element: <div className="hero"><ResetPassword /></div>}
                 ]
             }, 
             {element: <AuthConditionalRoute auth={true}/>, children: 
                 [
                     {path: '/erori', element: <Dummy />},
-                    {path: '/profile', element: <ProfileSection />},
-                    {path: '/favorites', element: <div className="hero" id="new-hero"><FavoritesSection /></div>},
-                    {path: '/catalog', element: <div className="hero" id="new-hero"><CatalogSection /></div>}
+                    {path: '/profile', element:  <div className="hero" id="profile-hero"><ProfileSection /></div>},
+                    {path: '/favorites', element: <div className="hero" id="list-hero"><FavoritesSection /></div>},
+                    {path: '/catalog', element: <div className="hero" id="list-hero"><CatalogSection /></div>}
                 ]
             }, 
             {path: '', element: <LandingPage />},
             {path: '/game', element: <div className="hero"><Homepage /></div>},
-            {path: '/register', element: <Register />},
         ]
     }
 ])

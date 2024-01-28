@@ -10,6 +10,7 @@ function App() {
     return (
     <UserContextProvider>
       <ModalContextProvider>
+        <Navbar />
         <ToastContainer className="toaster-messages" position="bottom-right" hideProgressBar theme="colored"/>
           <Outlet />
       </ModalContextProvider>
