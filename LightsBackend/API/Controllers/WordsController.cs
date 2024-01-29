@@ -53,6 +53,13 @@ namespace API.Controllers
             return Ok(word);
         }
 
+        [HttpGet("count")]
+        public async Task<ActionResult<int>> GetCount()
+        {
+            var wordCount = await _context.Words.CountAsync();
+            return Ok(wordCount);
+        }
+
         [Authorize]
         [HttpDelete("wipeout")]
         public async Task<ActionResult> Wipeout()
