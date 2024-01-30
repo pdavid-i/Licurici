@@ -6,6 +6,7 @@ import './WordsContainer.css'
 interface WordsContainerProps {
     words: Word[];
     totalCount: number;
+    showMissing: boolean;
 }
 
 interface WordPokedex {
@@ -13,11 +14,10 @@ interface WordPokedex {
     totalCount: number;
 }
 
-function WordsContainer({words, totalCount} : WordsContainerProps) {
-
+function WordsContainer({words, totalCount, showMissing} : WordsContainerProps) {
     return <div className="words-container">
         {
-        totalCount > 0 ? WordPokedexList({words, totalCount})
+        showMissing ? WordPokedexList({words, totalCount})
         :
         words?.map(word => ( <WordBox key={word.id} word={word} />))
         }
@@ -29,12 +29,14 @@ function WordPokedexList({ words, totalCount } : WordPokedex) {
   
     for (let id = 1; id <= totalCount; id++) {
         const word = words?.find(word => word.id === id);
-        if (word)
+        if (word) {
         wordComponents.push(<WordBox key={id} word={word} />);
-        else
-        wordComponents.push(<WordBoxHidden id={id} />);
+        }
+        else {
+        wordComponents.push(<WordBoxHidden key={id} />);
+        }
     }
-  
+
     return <>{wordComponents}</>;
   }
 

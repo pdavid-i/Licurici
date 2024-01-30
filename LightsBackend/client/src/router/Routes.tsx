@@ -7,7 +7,6 @@ import Register from "../features/UnauthenticatedAccount/Register/Register";
 import AuthConditionalRoute from "./AuthConditionalRoute";
 import CatalogSection from "../features/CatalogSection/CatalogSection";
 import ProfileSection from "../features/Profile/ProfileSection";
-import FavoritesSection from "../features/FavoritesSection/FavoritesSection";
 import ForgotPassword from "../features/UnauthenticatedAccount/ForgotPassword/ForgotPassword";
 import ResetPassword from "../features/UnauthenticatedAccount/ResetPassword/ResetPassword";
 import LandingPage from "../features/LandingPage/LandingPage";
@@ -29,7 +28,6 @@ export const router = createBrowserRouter([
                 [
                     {path: '/erori', element: <Dummy />},
                     {path: '/profile', element:  <div className="hero" id="profile-hero"><ProfileSection /></div>},
-                    {path: '/favorites', element: <div className="hero" id="list-hero"><FavoritesSection /></div>},
                     {path: '/catalog', element: <div className="hero" id="list-hero"><CatalogSection /></div>}
                 ]
             }, 

@@ -60,7 +60,8 @@ const requests = {
 
 const Words = {
     random: () => requests.get('words/random'),
-    getWord: (wordId: number) => requests.get(`words/${wordId}`)
+    getWord: (wordId: number) => requests.get(`words/${wordId}`),
+    count: () => requests.get('words/count')
 }
 
 const TestErrors = {

@@ -1,12 +1,9 @@
 import './WordBoxHidden.css'
 import Icons from '../../constants/Icons'
 
-interface WordBoxHiddenProps {
-    id: number;
-}
-
-function WordBoxHidden({id} : WordBoxHiddenProps) {
-    return <div key={id} className="word-box-hidden">
+function WordBoxHidden() {
+    
+    return <div className="word-box">
             <svg  viewBox="0 0 512 512">
                 <g className="fa-group">
     <path

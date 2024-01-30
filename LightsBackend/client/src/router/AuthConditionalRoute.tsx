@@ -5,10 +5,9 @@ interface AuthConditionalRouteProps {
   }
 
 function AuthConditionalRoute({auth}: AuthConditionalRouteProps) {
-    // not bullet proof, i know
+
     const loggedIn = !!localStorage.getItem("jwt")
     
-    // cheeky, i like it
     if (auth === loggedIn) {
         return <Outlet></Outlet>
     }

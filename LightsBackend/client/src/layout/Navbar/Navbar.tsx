@@ -63,7 +63,6 @@ function AuthenticatedLinks() {
   return <>
           <NavbarItem text='Profil' link='/profile' svgSource={Icons.avatarFull}/>
           <NavbarItem text='Catalog' link='/catalog' svgSource={Icons.book}/>
-          <NavbarItem text='Favorite' link='/favorites' svgSource={Icons.heartEmpty}/>
 
     <li className="nav-item bottom-item">
       <a onClick={logout} href="#" className="nav-link">
