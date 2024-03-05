@@ -16,11 +16,15 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(async response => {
     return response;
 }, (error: AxiosError) => {
-    if (!error.response) return Promise.reject(error);
+
+    if (!error.response) {
+        toast.error(error.message ?? 'An unexpected error has occured')
+        return Promise.reject(error)
+    }
+
     const {data, status} = error.response as AxiosResponse;
     switch (status) {
         case 400:
-
             if (data.errors) {
                 const modelStateErrors: string[] = [];
                 for (const key in data.errors) {
@@ -39,6 +43,9 @@ axios.interceptors.response.use(async response => {
             toast.error(data.title);
             break;
         case 404:
+            toast.error(data.title);
+            break;
+        case 500:
             toast.error(data.title);
             break;
         default:
