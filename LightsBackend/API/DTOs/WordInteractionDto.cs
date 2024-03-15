@@ -4,7 +4,7 @@ namespace API.DTOs
     {
         public int WordId { get; set; }
         public bool Favourite { get; set; }
-        public string[] Uses { get; set; }
-
+        public string Usage { get; set; }
+        public int UsageRating { get; set; }
     }
 }

@@ -16,6 +16,7 @@ const Modal = ({ toggleWordModal, wordId} : ModalProps)  => {
     const [word, setWord] = useState<Word>();
     const [userInput, setUserInput] = useState('');
     const [inputFeedback, setInputFeedback] = useState('');
+    const [inputRating, setInputRating] = useState(0);
 
     const riseUp = {
         hidden: {
@@ -44,7 +45,6 @@ const Modal = ({ toggleWordModal, wordId} : ModalProps)  => {
         .then(res => {
             setWord(res)
 
-
             
         })
         .catch(err => console.log(err.response))
@@ -52,23 +52,31 @@ const Modal = ({ toggleWordModal, wordId} : ModalProps)  => {
 
 
     const checkFeedback = () => {
+        if (!word) return;
 
-        const dummy = Math.floor(Math.random()*2) > 0 ? "Great succes very nice word" : "Nuh uh";
+        const examplePayload = {
+            word: word.name,
+            context: userInput
+        };
 
-        setInputFeedback(dummy)
-        if (dummy.length > 15) {
+        agent.WordInteractions.checkUsage(examplePayload)
+        .then(res => {
+            setInputFeedback(res.comments)
+            setInputRating(res.rating)
+            console.log(res)
+        })
+        .catch(err => console.log(err.response))
+
+        if (inputRating > 1) {
+            console.log('Recorded')
             recordInteraction();
         }
-
     }
 
     const recordInteraction = () => {
-        
-        if (!word) return;
-
         const interactionData = {
             wordId: word.id,
-            uses: [] 
+            usage: userInput
         };
 
         // Record the interaction
@@ -90,7 +98,6 @@ const Modal = ({ toggleWordModal, wordId} : ModalProps)  => {
                 <h3 id="word-name">{word?.name}</h3>
                 <hr></hr>
                 <ul>
-                    
                     {word?.definitions.map((definition, index) => {
                         return <li key={index}><WordMeaning definition={definition} /></li>;
                     })}
@@ -105,6 +112,7 @@ const Modal = ({ toggleWordModal, wordId} : ModalProps)  => {
                 />
                 <button onClick={checkFeedback}>Check</button>
                 {/* Display API response */}
+                {inputRating && <p>{inputRating}</p>}
                 {inputFeedback && <p>{inputFeedback}</p>}
 
             </motion.div>
