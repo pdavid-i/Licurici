@@ -48,6 +48,50 @@ hr::after {
     background: #05053b;
 }
 
-ul li{
+ul li {
     color:white;
 }
+
+#input-area {
+    margin-top: 50px;
+    margin-bottom: 30px;
+    height: 40px;
+}
+
+#check-wrapper {
+    text-align: center;
+}
+
+#feedback {
+    margin-top: 20px;
+    border-radius: 6px;
+    border:4px solid;
+    padding: 10px;
+
+    p {
+        color: unset;
+    }
+}
+
+.rating0 {
+    border-color: rgb(199, 56, 56) !important;
+    background: #eb6c6c3d;
+    color: rgb(199, 56, 56) !important;;
+}
+
+.rating1 {
+    border-color: rgb(219, 132, 32) !important;
+    color: rgb(219, 132, 32) !important;;
+    background: #c281443d;
+}
+
+.rating2 {
+    border-color: rgb(76, 107, 207) !important;
+    color: #aebadf !important;;
+    background: #456faf3d;}
+
+.rating3 {
+    border-color: rgb(85, 241, 241) !important;
+    color: rgb(85, 241, 241) !important;;
+    background: #59a5c43d;
+} 

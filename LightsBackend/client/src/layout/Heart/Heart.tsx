@@ -1,20 +1,21 @@
-import './Heart.css'
-import Icons from '../../constants/Icons'
+import './Heart.css';
+import Icons from '../../constants/icons';
 
 interface HeartProps {
-    isFull: boolean
+	isFull: boolean;
 }
 
-function Heart({isFull} : HeartProps) {
-
-    return <svg viewBox="0 0 512 512" >
-        <g>
-          <path
-            fill="white"
-            d={isFull? Icons.heartFull : Icons.heartEmpty}
-          ></path>
-        </g>
-      </svg>
+function Heart({ isFull }: HeartProps) {
+	return (
+		<svg viewBox='0 0 512 512'>
+			<g>
+				<path
+					fill='white'
+					d={isFull ? Icons.heartFull : Icons.heartEmpty}
+				></path>
+			</g>
+		</svg>
+	);
 }
 
-export default Heart
+export default Heart;
