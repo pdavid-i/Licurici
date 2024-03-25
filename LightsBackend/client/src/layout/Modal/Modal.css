@@ -73,6 +73,10 @@ ul li {
     }
 }
 
+.diamond {
+    color: #99ffeb !important;
+}
+
 .rating0 {
     border-color: rgb(199, 56, 56) !important;
     background: #eb6c6c3d;

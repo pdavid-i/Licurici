@@ -6,6 +6,7 @@ import { Word } from '../../types/Word';
 import agent from '../../api/agent';
 import LoadingButton from '../LoadingButton/LoadingButton';
 import Heart from '../../features/HeartWord/HeartWord';
+import Diamond from '../Diamond/Diamond';
 
 interface ModalProps {
 	toggleWordModal: () => void;
@@ -13,6 +14,7 @@ interface ModalProps {
 }
 
 const Modal = ({ toggleWordModal, wordId }: ModalProps) => {
+	const [foundAt, setFoundAt] = useState('');
 	const [word, setWord] = useState<Word>();
 	const [userInput, setUserInput] = useState('');
 	const [inputFeedback, setInputFeedback] = useState('');
@@ -42,12 +44,32 @@ const Modal = ({ toggleWordModal, wordId }: ModalProps) => {
 	};
 
 	useEffect(() => {
-		(wordId ? agent.Words.getWord(wordId) : agent.Words.random())
-			.then((res) => {
-				setWord(res);
-			})
-			.catch((err) => console.log(err.response));
+		if (wordId) {
+			agent.WordInteractions.myInteraction(wordId)
+				.then((res) => {
+					console.log(res);
+					setFoundAt(res.createdAt);
+					setWord(res.word);
+					setInputRating(inputRating);
+					setInputFeedback(inputFeedback);
+				})
+				.catch((err) => console.log(err.response));
+		} else {
+			agent.Words.random()
+				.then((res) => {
+					console.log(res);
+					setWord(res);
+				})
+				.catch((err) => console.log(err.response));
+		}
 	}, []);
+
+	useEffect(() => {
+		if (inputRating > 1) {
+			console.log('Recorded');
+			recordInteraction();
+		}
+	}, [inputRating]);
 
 	const checkFeedback = () => {
 		if (!word) return;
@@ -58,7 +80,6 @@ const Modal = ({ toggleWordModal, wordId }: ModalProps) => {
 		};
 
 		setIsLoading(true);
-		console.log('E tru');
 		agent.WordInteractions.checkUsage(examplePayload)
 			.then((res) => {
 				setInputFeedback(res.comments);
@@ -66,24 +87,24 @@ const Modal = ({ toggleWordModal, wordId }: ModalProps) => {
 				setIsLoading(false);
 			})
 			.catch((err) => console.log(err.response));
-
-		console.log('E fals');
-		if (inputRating > 1) {
-			console.log('Recorded');
-			recordInteraction();
-		}
 	};
 
 	const recordInteraction = () => {
 		const interactionData = {
 			wordId: word.id,
 			usage: userInput,
+			usageRating: inputRating,
 		};
 
 		// Record the interaction
 		agent.WordInteractions.new(interactionData).catch((err) =>
 			console.log('Error recording interaction:', err.response)
 		);
+	};
+
+	const formatDate = (dateString: string) => {
+		const date = new Date(dateString);
+		return date.toLocaleDateString('en-GB'); // 'en-GB' uses day/month/year format
 	};
 
 	return (
@@ -96,8 +117,13 @@ const Modal = ({ toggleWordModal, wordId }: ModalProps) => {
 				animate='visible'
 				exit='exit'
 			>
-				{word && <Heart id={word.id} />}
-				<h3 id='word-name'>{word?.name}</h3>
+				<div>
+					{word && <Heart id={word.id} />}
+					{inputRating > 2 && <Diamond />}
+				</div>
+				<h3 id='word-name' className={inputRating > 2 ? 'diamond' : ''}>
+					{word?.name}
+				</h3>
 				<hr></hr>
 				<ul>
 					{word?.definitions.map((definition, index) => {
@@ -112,21 +138,26 @@ const Modal = ({ toggleWordModal, wordId }: ModalProps) => {
 					</p>
 				</ul>
 
-				<input
-					id='input-area'
-					type='text'
-					value={userInput}
-					onChange={(e) => setUserInput(e.target.value)}
-					placeholder='Type a sentence'
-				/>
-				<div id='check-wrapper' onClick={checkFeedback}>
-					<LoadingButton text='Check' isLoading={isLoading} />
-				</div>
-
-				{inputFeedback && (
-					<div id='feedback' className={'rating' + inputRating.toString()}>
-						<p>{inputFeedback}</p>
-					</div>
+				{!foundAt ? (
+					<>
+						<input
+							id='input-area'
+							type='text'
+							value={userInput}
+							onChange={(e) => setUserInput(e.target.value)}
+							placeholder='Type a sentence'
+						/>
+						<div id='check-wrapper' onClick={checkFeedback}>
+							<LoadingButton text='Check' isLoading={isLoading} />
+						</div>
+						{inputFeedback && (
+							<div id='feedback' className={'rating' + inputRating.toString()}>
+								<p>{inputFeedback}</p>
+							</div>
+						)}
+					</>
+				) : (
+					<>Acest cuvant a fost gasit in {formatDate(foundAt)}</>
 				)}
 			</motion.div>
 		</Focus>
