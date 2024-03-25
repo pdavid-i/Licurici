@@ -157,7 +157,9 @@ const Modal = ({ toggleWordModal, wordId }: ModalProps) => {
 						)}
 					</>
 				) : (
-					<>Acest cuvant a fost gasit in {formatDate(foundAt)}</>
+					<div id='found-at'>
+						<i>Acest cuvant a fost gasit in {formatDate(foundAt)}</i>
+					</div>
 				)}
 			</motion.div>
 		</Focus>

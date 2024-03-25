@@ -77,6 +77,14 @@ ul li {
     color: #99ffeb !important;
 }
 
+#found-at {
+    margin-top: 40px;
+    text-align: right;
+    i {
+        font-size: 1.3em;
+    }
+}
+
 .rating0 {
     border-color: rgb(199, 56, 56) !important;
     background: #eb6c6c3d;
