@@ -89,6 +89,7 @@ const Account = {
 
 const WordInteractions = {
     mine: () => requests.get('WordInteractions/mine'),
+    myInteraction: (wordId: number) => requests.get(`WordInteractions/mine/${wordId}`),
     new: (data: object) => requests.post('WordInteractions', data),
     favorite: (wordId: number) => requests.postNoBody(`WordInteractions/favorite/${wordId}`),
     isFavorite: (wordId: number) => requests.get(`WordInteractions/favorite/${wordId}`),
