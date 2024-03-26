@@ -145,7 +145,7 @@ const Modal = ({ toggleWordModal, wordId }: ModalProps) => {
 							type='text'
 							value={userInput}
 							onChange={(e) => setUserInput(e.target.value)}
-							placeholder='Type a sentence'
+							placeholder={`Pune în valoare sensul cuvântului ${word?.name}`}
 						/>
 						<div id='check-wrapper' onClick={checkFeedback}>
 							<LoadingButton text='Check' isLoading={isLoading} />
