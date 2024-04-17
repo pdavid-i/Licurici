@@ -1,37 +1,55 @@
-import { ReactNode, createContext, useState } from 'react';
+import {
+	ReactNode,
+	createContext,
+	useState,
+	Dispatch,
+	SetStateAction,
+} from 'react';
 
-interface ModelContextProviderPros {
-  children: ReactNode
+interface ModalContextProviderProps {
+	children: ReactNode;
 }
 
-interface ModelContextProviderType  {
-  wordId: number | undefined
-  showWordModal: boolean
-  setWordId: () => React.Dispatch<React.SetStateAction<number | undefined>>
-  setShowWordModal: () => React.Dispatch<React.SetStateAction<boolean>>;
-  toggleWordModal: () => void;
+interface ModalContextType {
+	wordId: number | undefined;
+	showWordModal: boolean;
+	setWordId: Dispatch<SetStateAction<number | undefined>>;
+	setShowWordModal: Dispatch<SetStateAction<boolean>>;
+	toggleWordModal: () => void;
 }
 
-const defaultContextValue: ModelContextProviderType = {
-  setWordId: (() => {}),
-  setShowWordModal: () => {}
+const defaultContextValue: ModalContextType = {
+	wordId: undefined,
+	showWordModal: false,
+	setWordId: () => {},
+	setShowWordModal: () => {},
+	toggleWordModal: () => {},
 };
 
-export const ModalContext = createContext(defaultContextValue);
+export const ModalContext =
+	createContext<ModalContextType>(defaultContextValue);
 
+export const ModalContextProvider: React.FC<ModalContextProviderProps> = ({
+	children,
+}) => {
+	const [showWordModal, setShowWordModal] = useState<boolean>(false);
+	const [wordId, setWordId] = useState<number | undefined>(undefined);
 
+	const toggleWordModal = () => {
+		setShowWordModal(!showWordModal);
+	};
 
-export const ModalContextProvider = ({ children } : ModelContextProviderPros) => {
-    const [showWordModal, setShowWordModal] = useState(false);
-    const [wordId, setWordId] = useState(undefined);
-
-    const toggleWordModal = () => {
-      setShowWordModal(!showWordModal);
-    };
-    
-    return (
-        <ModalContext.Provider value={{ setShowWordModal, wordId, showWordModal, setWordId, toggleWordModal}}>
-            {children}
-        </ModalContext.Provider>
-    );
-}
+	return (
+		<ModalContext.Provider
+			value={{
+				showWordModal,
+				setShowWordModal,
+				wordId,
+				setWordId,
+				toggleWordModal,
+			}}
+		>
+			{children}
+		</ModalContext.Provider>
+	);
+};

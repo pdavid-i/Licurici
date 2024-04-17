@@ -2,8 +2,8 @@ interface NavbarItemProps {
 	svgSource: string;
 	text: string;
 	link: string;
-	width: string;
-	height: string;
+	width?: string;
+	height?: string;
 }
 
 function NavbarItem({

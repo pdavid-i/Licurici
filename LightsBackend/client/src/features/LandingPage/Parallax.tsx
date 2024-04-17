@@ -1,6 +1,14 @@
 import { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import Mountain1Svg from '../../assets/mountain-1.svg';
+import Mountain2Svg from '../../assets/mountain-2.svg';
+import Mountain3Svg from '../../assets/mountain-3.svg';
+import CloudsBottomSvg from '../../assets/clouds-bottom.svg';
+import CloudsRightSvg from '../../assets/clouds-right.svg';
+import CloudsLeftSvg from '../../assets/clouds-left.svg';
+import SunSvg from '../../assets/sun.svg';
+import StarsSvg from '../../assets/stars.svg';
 
 function Parallax() {
 	const [background, setBackground] = useState(20);
@@ -43,7 +51,7 @@ function Parallax() {
 			tl.to(
 				mountain2.current,
 				{
-					y: '-=30',
+					y: `-=${window.innerWidth > 600 ? 50 : 0}`,
 				},
 				0
 			);
@@ -88,14 +96,18 @@ function Parallax() {
 			tl.to(
 				sun.current,
 				{
-					y: `+${window.innerHeight / 2}`,
+					y: `+${window.innerHeight * 0.55}`,
 				},
 				0
 			);
 			tl.to(
 				copy.current,
 				{
-					y: `-${window.innerHeight / 2}`,
+					y: `-${
+						window.innerHeight > 700
+							? window.innerHeight * 0.4
+							: window.innerHeight * 0.55
+					}`,
 					opacity: 1,
 					ease: 'power4.easeIn',
 				},
@@ -121,38 +133,18 @@ function Parallax() {
 				}}
 				className='parallax'
 			>
-				<img
-					ref={mountain3}
-					className='mountain-3'
-					src='src/assets/mountain-3.svg'
-				/>
-				<img
-					ref={mountain2}
-					className='mountain-2'
-					src='src/assets/mountain-2.svg'
-				/>
-				<img
-					ref={mountain1}
-					className='mountain-1'
-					src='src/assets/mountain-1.svg'
-				/>
-				<img ref={sun} className='sun' src='src/assets/sun.svg' />
+				<img ref={mountain3} className='mountain-3' src={Mountain3Svg} />
+				<img ref={mountain2} className='mountain-2' src={Mountain2Svg} />
+				<img ref={mountain1} className='mountain-1' src={Mountain1Svg} />
+				<img ref={sun} className='sun' src={SunSvg} />
 				<img
 					ref={cloudsBottom}
 					className='clouds-bottom'
-					src='src/assets/cloud-bottom.svg'
+					src={CloudsBottomSvg}
 				/>
-				<img
-					ref={cloudsLeft}
-					className='clouds-left'
-					src='src/assets/clouds-left.svg'
-				/>
-				<img
-					ref={cloudsRight}
-					className='clouds-right'
-					src='src/assets/clouds-right.svg'
-				/>
-				<img ref={stars} className='stars' src='src/assets/stars.svg' />
+				<img ref={cloudsLeft} className='clouds-left' src={CloudsLeftSvg} />
+				<img ref={cloudsRight} className='clouds-right' src={CloudsRightSvg} />
+				<img ref={stars} className='stars' src={StarsSvg} />
 				<div ref={copy} className='copy'>
 					<h1>Logos</h1>
 					<a id='orizonturi-noi' href='/game'>

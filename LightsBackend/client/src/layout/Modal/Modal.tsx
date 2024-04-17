@@ -91,15 +91,16 @@ const Modal = ({ toggleWordModal, wordId }: ModalProps) => {
 
 	const recordInteraction = () => {
 		const interactionData = {
-			wordId: word.id,
+			wordId: word?.id,
 			usage: userInput,
 			usageRating: inputRating,
 		};
 
 		// Record the interaction
-		agent.WordInteractions.new(interactionData).catch((err) =>
-			console.log('Error recording interaction:', err.response)
-		);
+		agent.WordInteractions.new(interactionData).catch((err) => {
+			console.log('Pl eroare:', err);
+			console.log('Error recording interaction:', err.response);
+		});
 	};
 
 	const formatDate = (dateString: string) => {

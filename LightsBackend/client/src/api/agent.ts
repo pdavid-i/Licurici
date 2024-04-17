@@ -1,8 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 
-axios.defaults.baseURL = 'http://localhost:5000/api/'
-
+axios.defaults.baseURL = import.meta.env.VITE_API_URL
 axios.interceptors.request.use(config => {
     const token = localStorage.getItem('jwt');
     if (token) {

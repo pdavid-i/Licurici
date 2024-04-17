@@ -25,7 +25,7 @@ function LandingPage() {
 				<p className='paragraph'>
 					Când auzim prima oară de gustul unui vin fiind descris ca floral de
 					pildă, ni se limpezesc arome înainte bâjbâite. Limba din gură îmi e
-					acceași - dar pot simți gustul diferit în funcție de limba de o am în
+					acceași - dar pot simți gustul diferit în funcție de limba ce o am în
 					minte.
 				</p>
 			</div>
