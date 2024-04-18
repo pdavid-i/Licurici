@@ -44,14 +44,14 @@ function Parallax() {
 			tl.to(
 				mountain3.current,
 				{
-					y: '-=80',
+					y: `-=${window.innerWidth > 600 ? 80 : 50}`,
 				},
 				0
 			);
 			tl.to(
 				mountain2.current,
 				{
-					y: `-=${window.innerWidth > 600 ? 50 : 0}`,
+					y: `-=${window.innerWidth > 600 ? 50 : 20}`,
 				},
 				0
 			);
