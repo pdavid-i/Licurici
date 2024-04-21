@@ -1,12 +1,14 @@
 import { motion } from 'framer-motion';
 import Focus from '../Focus/Focus';
 import './Modal.css';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Word } from '../../types/Word';
 import agent from '../../api/agent';
 import LoadingButton from '../LoadingButton/LoadingButton';
 import Heart from '../../features/HeartWord/HeartWord';
 import Diamond from '../Diamond/Diamond';
+import { UserContext } from '../../helpers/UserContextProvider';
+import Spinner from '../Spinner/Spinner';
 
 interface ModalProps {
 	toggleWordModal: () => void;
@@ -19,7 +21,9 @@ const Modal = ({ toggleWordModal, wordId }: ModalProps) => {
 	const [userInput, setUserInput] = useState('');
 	const [inputFeedback, setInputFeedback] = useState('');
 	const [inputRating, setInputRating] = useState(0);
-	const [isLoading, setIsLoading] = useState(false);
+	const [isInteractionLoading, setIsInteractionLoading] = useState(false);
+	const [isWordLoading, setIsWordLoading] = useState(true);
+	const { isAuth } = useContext(UserContext);
 
 	const riseUp = {
 		hidden: {
@@ -52,6 +56,7 @@ const Modal = ({ toggleWordModal, wordId }: ModalProps) => {
 					setWord(res.word);
 					setInputRating(inputRating);
 					setInputFeedback(inputFeedback);
+					setIsWordLoading(false);
 				})
 				.catch((err) => console.log(err.response));
 		} else {
@@ -59,6 +64,7 @@ const Modal = ({ toggleWordModal, wordId }: ModalProps) => {
 				.then((res) => {
 					console.log(res);
 					setWord(res);
+					setIsWordLoading(false);
 				})
 				.catch((err) => console.log(err.response));
 		}
@@ -72,19 +78,19 @@ const Modal = ({ toggleWordModal, wordId }: ModalProps) => {
 	}, [inputRating]);
 
 	const checkFeedback = () => {
-		if (!word) return;
+		if (!word || !userInput || isInteractionLoading) return;
 
 		const examplePayload = {
 			word: word.name,
 			context: userInput,
 		};
 
-		setIsLoading(true);
+		setIsInteractionLoading(true);
 		agent.WordInteractions.checkUsage(examplePayload)
 			.then((res) => {
 				setInputFeedback(res.comments);
 				setInputRating(res.rating);
-				setIsLoading(false);
+				setIsInteractionLoading(false);
 			})
 			.catch((err) => console.log(err.response));
 	};
@@ -105,9 +111,15 @@ const Modal = ({ toggleWordModal, wordId }: ModalProps) => {
 
 	const formatDate = (dateString: string) => {
 		const date = new Date(dateString);
-		return date.toLocaleDateString('en-GB'); // 'en-GB' uses day/month/year format
+		return date.toLocaleDateString('en-GB');
 	};
 
+	if (isWordLoading)
+		return (
+			<Focus toggleWordModal={toggleWordModal}>
+				<Spinner size={100} />
+			</Focus>
+		);
 	return (
 		<Focus toggleWordModal={toggleWordModal}>
 			<motion.div
@@ -118,8 +130,9 @@ const Modal = ({ toggleWordModal, wordId }: ModalProps) => {
 				animate='visible'
 				exit='exit'
 			>
+				<div></div>
 				<div>
-					{word && <Heart id={word.id} />}
+					{isAuth && word && <Heart id={word.id} />}
 					{inputRating > 2 && <Diamond />}
 				</div>
 				<h3 id='word-name' className={inputRating > 2 ? 'diamond' : ''}>
@@ -149,7 +162,11 @@ const Modal = ({ toggleWordModal, wordId }: ModalProps) => {
 							placeholder={`Pune în valoare sensul cuvântului ${word?.name}`}
 						/>
 						<div id='check-wrapper' onClick={checkFeedback}>
-							<LoadingButton text='Check' isLoading={isLoading} />
+							<LoadingButton
+								text='Check'
+								isLoading={isInteractionLoading}
+								isDisabled={!userInput || isInteractionLoading}
+							/>
 						</div>
 						{inputFeedback && (
 							<div id='feedback' className={'rating' + inputRating.toString()}>

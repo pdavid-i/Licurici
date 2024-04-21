@@ -1,25 +1,27 @@
 import { Word } from '../../features/CatalogSection/CatalogSection';
-import './WordBox.css'
+import './WordBox.css';
 import { useContext } from 'react';
 import { ModalContext } from '../../helpers/ModalContextProvider';
 
 interface WordBoxProps {
-    word: Word;
+	word: Word;
 }
 
-function WordBox({word} : WordBoxProps) {
-    const { setWordId, setShowWordModal } = useContext(ModalContext);
+function WordBox({ word }: WordBoxProps) {
+	const { setWordId, setShowWordModal } = useContext(ModalContext);
 
-    function goToWord(): void {
-        setWordId(word.id);
-        setShowWordModal(true);
-    }
+	function goToWord(): void {
+		setWordId(word.id);
+		setShowWordModal(true);
+	}
 
-    return <>
-        <div onClick={goToWord} key={word.id} className="word-box">
-            {word.name}
-        </div>
-    </>
+	return (
+		<>
+			<div onClick={goToWord} key={word.id} className='word-box'>
+				<p>{word.name}</p>
+			</div>
+		</>
+	);
 }
 
-export default WordBox
+export default WordBox;

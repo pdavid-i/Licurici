@@ -7,7 +7,7 @@ interface HeartProps {
 
 function Heart({ isFull }: HeartProps) {
 	return (
-		<svg viewBox='0 0 512 512'>
+		<svg id='heart-svg' viewBox='0 0 512 512'>
 			<g>
 				<path
 					fill='white'

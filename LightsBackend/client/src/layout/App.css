@@ -20,3 +20,7 @@
 .toaster-messages {
     margin-right: 80px;
 }
+
+body {
+    font-family: "Jersey 10", sans-serif;
+}

@@ -38,3 +38,18 @@
         width: 60%;
     }
   }
+
+@media screen and (max-width: 600px) {
+    .profileSection {
+        padding: 20px;
+    }
+
+    .profileSection p{
+        font-size: 18px;
+        margin: 8px 15px;
+    }
+
+    .random {
+        margin-top: 10px;
+    }
+}

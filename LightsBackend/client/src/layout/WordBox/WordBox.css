@@ -14,3 +14,13 @@
     font-weight: bold;
     border-radius: 6px;
 }
+
+@media only screen and (max-width: 420px) {
+    .word-box p {
+        font-size: 18px !important;
+    }
+  }
+
+.word-box p {
+    font-size: 26px;
+}

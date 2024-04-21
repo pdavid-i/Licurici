@@ -9,6 +9,11 @@ button {
     letter-spacing: 1.25px;
     cursor: default;
     color: #fff;
-    background: transparent;
   }
   
+  button:disabled {
+    background-color: #cccccc63;
+    color: #999;
+    cursor: not-allowed;
+    border-color: transparent;
+  }

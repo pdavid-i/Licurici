@@ -21,6 +21,26 @@
 }
 
 #favoritesFilter {
+    border: none;
+    background-color: transparent;
     margin-top: auto;
     margin-bottom: auto;
+}
+
+.center-spinner{
+    display: flex;
+    justify-content: center; 
+    align-items: center;  
+    margin-top: 10%;
+}
+
+@media only screen and (max-width: 600px) {
+    #catalogHeadline {
+        color:whitesmoke;
+        font-size: 40px;
+    }
+
+    #favoritesFilter {
+        padding-bottom: 45px;
+    }
 }

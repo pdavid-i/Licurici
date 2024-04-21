@@ -1,6 +1,8 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 
+const sleep = () => new Promise(resolve => setTimeout(resolve, 1000))
+
 axios.defaults.baseURL = import.meta.env.VITE_API_URL
 axios.interceptors.request.use(config => {
     const token = localStorage.getItem('jwt');
@@ -13,6 +15,7 @@ axios.interceptors.request.use(config => {
   });
 
 axios.interceptors.response.use(async response => {
+    await sleep();
     return response;
 }, (error: AxiosError) => {
 

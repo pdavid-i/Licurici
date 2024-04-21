@@ -31,12 +31,9 @@
   .login-container {
     max-width: 500px;
     margin-top: 5%;
-    /* Adjust width as needed */
     width: 50%;
-    /* Create a left margin that's half the size of the right margin */
-    margin-left: calc(16.666% - 1px); /* Adjust 1px if needed for better precision */
+    margin-left: calc(16.666% - 1px); 
     margin-right: 33.333%;
-    /* Other styles for your content */
   }
 
 
