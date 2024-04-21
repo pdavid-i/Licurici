@@ -5,10 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
-using System.Net.Http.Headers;
-using Newtonsoft.Json;
-using System.Text;
-using Newtonsoft.Json.Linq;
 using Azure.AI.OpenAI.Assistants;
 using Azure;
 

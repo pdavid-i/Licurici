@@ -14,7 +14,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Word>>> GetWords()
         {
-            if (!_context.Words.Any()) 
+            if (!_context.Words.Any())
                 return NoContent();
 
             var words = await _context.Words.ToListAsync();
@@ -41,13 +41,13 @@ namespace API.Controllers
         [HttpGet("random")]
         public async Task<ActionResult<List<Word>>> GetRandomWord()
         {
-            if (!_context.Words.Any()) 
+            if (!_context.Words.Any())
                 return NoContent();
 
             Random generator = new Random();
             var wordCount = await _context.Words.CountAsync();
 
-            var wordId = generator.Next(1, wordCount+1);
+            var wordId = generator.Next(1, wordCount + 1);
             var word = await _context.Words.FindAsync(wordId);
 
             return Ok(word);
@@ -58,23 +58,6 @@ namespace API.Controllers
         {
             var wordCount = await _context.Words.CountAsync();
             return Ok(wordCount);
-        }
-
-        [Authorize]
-        [HttpDelete("wipeout")]
-        public async Task<ActionResult> Wipeout()
-        {
-            var words = await _context.Words.ToListAsync();
-
-            if (!words.Any())
-            {
-                return NotFound("No words were found.");
-            }
-
-            _context.Words.RemoveRange(words);
-            await _context.SaveChangesAsync();
-
-            return Ok("All words were removed.");
         }
     }
 }
