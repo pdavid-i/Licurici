@@ -53,8 +53,20 @@ namespace API.Controllers
             return Ok(interaction);
         }
 
-        [HttpGet("randomUnsolved")]
-        public async Task<IActionResult> GetUnsolvedSentence()
+        [HttpGet("countSolvedy")]
+        public async Task<IActionResult> GetSolvedCount()
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            var count = await _context.SentenceInteractions
+                                                     .Where(si => si.UserId == user.Id)
+                                                     .CountAsync();
+
+            return Ok(count);
+        }
+
+        [HttpGet("random")]
+        public async Task<IActionResult> GetRandomSentence()
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
@@ -66,14 +78,16 @@ namespace API.Controllers
             var unsolvedSentences = _context.IncompleteSentences
                                 .Where(s => !completedSentenceIds.Contains(s.Id));
 
-            var randomUnsolvedSentence = await unsolvedSentences.OrderBy(r => Guid.NewGuid()).FirstOrDefaultAsync();
+            // We first try to get a random sentence that the user has not solved yet
+            var randomSentence = await unsolvedSentences.OrderBy(r => Guid.NewGuid()).FirstOrDefaultAsync();
 
-            if (randomUnsolvedSentence == null)
+            if (randomSentence == null)
             {
-                return NotFound("No more sentences available to complete.");
+                // If there are no more unsolved sentences, we return a random sentence
+                randomSentence = await _context.IncompleteSentences.OrderBy(r => Guid.NewGuid()).FirstOrDefaultAsync();
             }
 
-            return Ok(randomUnsolvedSentence);
+            return Ok(randomSentence);
         }
 
         [HttpGet("all")]

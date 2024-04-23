@@ -90,6 +90,18 @@ namespace API.Controllers
             return Ok(wordInteractions);
         }
 
+        [HttpGet("myCount")]
+        public async Task<ActionResult<int>> GetNumberOfWordsDiscovered()
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var userId = user.Id;
+            var nrWordsForUser = await _context.Interactions
+                                            .Where(wi => wi.UserId == userId)
+                                            .CountAsync();
+
+            return Ok(nrWordsForUser);
+        }
+
         [HttpPost("favorite/{wordId}")]
         public async Task<IActionResult> ToggleFavorite(int wordId)
         {
