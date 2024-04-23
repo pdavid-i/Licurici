@@ -91,12 +91,19 @@ const Account = {
 
 const WordInteractions = {
     mine: () => requests.get('WordInteractions/mine'),
+    countMine: () => requests.get('WordInteractions/myCount'),
     myInteraction: (wordId: number) => requests.get(`WordInteractions/mine/${wordId}`),
     new: (data: object) => requests.post('WordInteractions', data),
     favorite: (wordId: number) => requests.postNoBody(`WordInteractions/favorite/${wordId}`),
     isFavorite: (wordId: number) => requests.get(`WordInteractions/favorite/${wordId}`),
     getFavorites: () => requests.get('WordInteractions/favorites'),
     checkUsage: (data: object) => requests.post('WordInteractions/checkUsage', data)
+}
+
+const SentenceInteractions = {
+    new: () => requests.get('SentenceInteractions/random'),
+    complete: (data: object) => requests.post('SentenceInteractions/interaction', data),
+    countSolved: () => requests.get('SentenceInteractions/countSolvedy')
 }
 
 const Profile = {
@@ -113,7 +120,8 @@ const agent = {
     Account,
     WordInteractions,
     Profile, 
-    Thoughts
+    Thoughts,
+    SentenceInteractions
 }
 
 export default agent;

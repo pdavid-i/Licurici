@@ -10,6 +10,7 @@ import ProfileSection from "../features/Profile/ProfileSection";
 import ForgotPassword from "../features/UnauthenticatedAccount/ForgotPassword/ForgotPassword";
 import ResetPassword from "../features/UnauthenticatedAccount/ResetPassword/ResetPassword";
 import LandingPage from "../features/LandingPage/LandingPage";
+import PuzzleSection from "../features/PuzzleSection/PuzzleSection";
 
 export const router = createBrowserRouter([
     {
@@ -28,7 +29,8 @@ export const router = createBrowserRouter([
                 [
                     {path: '/erori', element: <Dummy />},
                     {path: '/profile', element:  <div className="hero" id="profile-hero"><ProfileSection /></div>},
-                    {path: '/catalog', element: <div className="hero" id="list-hero"><CatalogSection /></div>}
+                    {path: '/catalog', element: <div className="hero" id="list-hero"><CatalogSection /></div>},
+                    {path: '/piese', element: <div className="hero" id="list-hero"><PuzzleSection /></div>}
                 ]
             }, 
             {path: '', element: <LandingPage />},

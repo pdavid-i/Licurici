@@ -1,0 +1,5 @@
+.innerSection {
+    padding: 60px;
+    overflow: auto;
+    max-height: 85%; 
+}

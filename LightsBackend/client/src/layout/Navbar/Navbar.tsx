@@ -66,6 +66,7 @@ function AuthenticatedLinks() {
 				svgSource={Icons.eye}
 				width='576'
 			/>
+			<NavbarItem text='Piese' link='/piese' svgSource={Icons.puzzle} />
 
 			<li className='nav-item bottom-item'>
 				<a onClick={logout} href='#' className='nav-link'>
