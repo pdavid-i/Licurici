@@ -1,5 +1,6 @@
 .login-form {
     max-width: 500px;
+    min-width: 80px;
     margin: 0 auto;
       padding: 20px;
       background-color: #fcf4e140;

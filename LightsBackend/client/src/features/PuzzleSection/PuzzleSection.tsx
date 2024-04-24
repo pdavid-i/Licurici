@@ -6,6 +6,7 @@ import WordsContainer from '../../layout/WordsContainer/WordsContainer';
 import HeartButton from '../../layout/Heart/Heart';
 import { Sentence } from '../../types/Sentence';
 import Spinner from '../../layout/Spinner/Spinner';
+import Gatekeeper from '../../layout/Gatekeeper/Gatekeeper';
 
 const PuzzleSection = () => {
 	const [sentence, setSentence] = useState<Sentence>();
@@ -83,7 +84,7 @@ const PuzzleSection = () => {
 					<p>{puzzlesSolvedCount}</p>
 				</div>
 				<hr></hr>
-				{wordsObtainedCount > 3 ? (
+				{wordsObtainedCount > 7 ? (
 					<Fragment>
 						{' '}
 						<button onClick={startPuzzle}>Start Puzzle</button>
@@ -105,7 +106,7 @@ const PuzzleSection = () => {
 						)}
 					</Fragment>
 				) : (
-					<p>Nunu trebe mai multe cuvinte</p>
+					<Gatekeeper />
 				)}
 			</div>
 		</Section>
