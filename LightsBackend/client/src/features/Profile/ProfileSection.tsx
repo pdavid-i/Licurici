@@ -13,6 +13,7 @@ const defaultProfileInfo: Profile = {
 	favoriteWordsCount: 1,
 	latestWord: 'ghiga',
 	profilePicture: '',
+	sentencesCompleted: 0,
 };
 
 const defaultThoughtChunks: Thought = {
@@ -65,6 +66,7 @@ function ProfileSection() {
 							<p>Cuvinte descoperite: {profile.wordsDiscoveredCount}</p>
 							<p>Ultima descoperire: {profile.latestWord}</p>
 							<p>Cuvinte favorite: {profile.favoriteWordsCount}</p>
+							<p>Piese găsite: {profile.sentencesCompleted} </p>
 						</div>
 						<div className='random cell'>
 							<p>{thought.firstFragment}</p>

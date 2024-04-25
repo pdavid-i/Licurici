@@ -28,19 +28,23 @@ namespace API.Controllers
             var wordsDiscovered = await _context.Interactions
                                         .Where(wi => wi.UserId == user.Id)
                                         .OrderByDescending(wi => wi.CreatedAt)
-                                        .Select(wi => new 
-                                        { 
+                                        .Select(wi => new
+                                        {
                                             wi.Word.Name,
                                             wi.Favourite
                                         })
                                         .ToListAsync();
 
-            if (wordsDiscovered.Count == 0) {
+            if (wordsDiscovered.Count == 0)
+            {
                 return NotFound(); // 404
             }
 
             var FavoriteWordsCount = wordsDiscovered.Count(w => w.Favourite);
-            var LatestWord = wordsDiscovered.FirstOrDefault().Name;                
+            var LatestWord = wordsDiscovered.FirstOrDefault().Name;
+            var sentencesCount = await _context.SentenceInteractions
+                                                     .Where(si => si.UserId == user.Id)
+                                                     .CountAsync();
 
             return new UserProfileDto
             {
@@ -49,7 +53,8 @@ namespace API.Controllers
                 ProfilePicture = user.ProfilePicture,
                 WordsDiscoveredCount = wordsDiscovered.Count,
                 FavoriteWordsCount = FavoriteWordsCount,
-                LatestWord = LatestWord
+                LatestWord = LatestWord,
+                SentencesCompleted = sentencesCount
             };
         }
     }

@@ -4,5 +4,6 @@ export interface Profile {
     wordsDiscoveredCount: number,
     favoriteWordsCount: number,
     latestWord: string,
-    profilePicture: string
+    profilePicture: string,
+    sentencesCompleted: number,
 }
