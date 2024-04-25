@@ -1,5 +1,6 @@
 import Torchman from '../../assets/torchman.svg';
 import Unknown from '../../assets/unknown.svg';
+import './Gatekeeper.css';
 
 function Gatekeeper() {
 	return (

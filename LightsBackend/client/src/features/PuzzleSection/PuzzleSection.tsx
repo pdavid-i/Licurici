@@ -7,6 +7,8 @@ import HeartButton from '../../layout/Heart/Heart';
 import { Sentence } from '../../types/Sentence';
 import Spinner from '../../layout/Spinner/Spinner';
 import Gatekeeper from '../../layout/Gatekeeper/Gatekeeper';
+import Lifeline from '../../layout/Lifeline/Lifeline';
+import CongratsMessage from './CongratsPuzzle';
 
 const PuzzleSection = () => {
 	const [sentence, setSentence] = useState<Sentence>();
@@ -14,6 +16,16 @@ const PuzzleSection = () => {
 	const [feedback, setFeedback] = useState('');
 	const [puzzlesSolvedCount, setPuzzlesSolvedCount] = useState(0);
 	const [wordsObtainedCount, setWordsObtainedCount] = useState(Number);
+	const [buttonClicked, setButtonClicked] = useState(false);
+	const goodFeedback = ['Perfect!', 'A-ntâia!', 'Smirna!', 'Tot asa!'];
+	const badFeedback = [
+		'N-a fost să fie.',
+		'Mai încearcă.',
+		'Poți mai bine.',
+		'E și mâine o zi.',
+		'Mai încearcă.',
+		'Aproape dar nu chiar.',
+	];
 
 	useEffect(() => {
 		agent.SentenceInteractions.countSolved()
@@ -21,7 +33,11 @@ const PuzzleSection = () => {
 				setPuzzlesSolvedCount(Number(res));
 			})
 			.catch((err) => console.log(err.response));
-	});
+	}, [sentence]);
+
+	const randomFeedback = (feedbackArray: string[]) => {
+		return feedbackArray[Math.floor(Math.random() * feedbackArray.length)];
+	};
 
 	useEffect(() => {
 		agent.WordInteractions.countMine()
@@ -30,9 +46,10 @@ const PuzzleSection = () => {
 				console.log(res);
 			})
 			.catch((err) => console.log(err.response));
-	});
+	}, []);
 
 	const startPuzzle = async () => {
+		setButtonClicked(true);
 		console.log('startPuzzle');
 		try {
 			const response = await agent.SentenceInteractions.new();
@@ -64,11 +81,10 @@ const PuzzleSection = () => {
 		if (!sentence || !userAnswer.trim()) return; // Ensure both sentence and user answer are provided
 
 		if (userAnswer.trim().toLowerCase() === sentence.answer.toLowerCase()) {
-			setFeedback('Correct answer!');
+			setFeedback(randomFeedback(goodFeedback));
 			saveInteraction();
-			setPuzzlesSolvedCount(puzzlesSolvedCount + 1);
 		} else {
-			setFeedback('Incorrect answer. Please try again.');
+			setFeedback(randomFeedback(badFeedback));
 		}
 	};
 
@@ -81,29 +97,47 @@ const PuzzleSection = () => {
 			<div className='innerSection'>
 				<div id='catalogHeader'>
 					<h1 id='catalogHeadline'>Piese</h1>
-					<p>{puzzlesSolvedCount}</p>
 				</div>
 				<hr></hr>
-				{wordsObtainedCount > 7 ? (
+				{wordsObtainedCount > 3 ? (
 					<Fragment>
 						{' '}
-						<button onClick={startPuzzle}>Start Puzzle</button>
-						{sentence && (
-							<div>
-								<p>{sentence.sentence}</p>
-								<input
-									type='text'
-									value={userAnswer}
-									onChange={(e) => setUserAnswer(e.target.value)}
-									placeholder='Type your answer here'
-								/>
-								<button onClick={checkAnswer}>Check Answer</button>
+						{wordsObtainedCount == 4 && <CongratsMessage />}
+						<div id='puzzleContainer'>
+							{!buttonClicked && (
+								<div id='startPuzzleButtonContainer'>
+									<button onClick={startPuzzle}>Ia să vedem</button>
+								</div>
+							)}
+							{sentence && (
+								<div>
+									<div id='sentenceContainer'>
+										<p>{sentence.sentence}</p>
+									</div>
+									<div id='answerBar'>
+										<input
+											type='text'
+											value={userAnswer}
+											onChange={(e) => setUserAnswer(e.target.value)}
+											placeholder='Pune o piesă..'
+										/>
+										{!goodFeedback.includes(feedback) && (
+											<button onClick={checkAnswer}>Verific-o</button>
+										)}
+										{window.innerWidth > 620 && (
+											<Lifeline tooltipText={sentence.hint} />
+										)}
+									</div>
+								</div>
+							)}
+							<div id='postCheck'>
+								{feedback && <p>{feedback}</p>}
+
+								{goodFeedback.includes(feedback) && (
+									<button onClick={nextPuzzle}>Mai vreau</button>
+								)}
 							</div>
-						)}
-						{feedback && <p>{feedback}</p>}
-						{feedback === 'Correct answer!' && (
-							<button onClick={nextPuzzle}>Next Puzzle</button>
-						)}
+						</div>
 					</Fragment>
 				) : (
 					<Gatekeeper />

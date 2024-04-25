@@ -11,6 +11,7 @@
 
     img {
         width: 15%;
+        min-width: 80px;
         padding-left: 2%;
         padding-right: 2%;
     }

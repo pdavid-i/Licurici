@@ -3,3 +3,54 @@
     overflow: auto;
     max-height: 85%; 
 }
+
+#puzzleContainer {
+    padding: 20px;
+}
+
+#sentenceContainer {
+    padding: 0 5%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+#startPuzzleButtonContainer {
+    display: flex;
+    justify-content: center;
+}
+
+#answerBar{
+    margin-top: 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+
+    input {
+        min-height: 48px;
+        width: 40%;
+        margin-right: 10px;
+    }
+}
+
+@media (max-width: 620px) {
+    #answerBar {
+        padding: 0;
+        flex-direction: column; /* Stacks the flex items vertically */
+        align-items: center; /* Centers the items when stacked vertically */
+    }
+
+    button {
+        font-size: 1rem;
+        margin-bottom: 10px;
+    }
+    #answerBar input {
+        width: 80%; /* Increases width for smaller screens */
+        margin-right: 0; /* Removes margin to center the input */
+        margin-bottom: 20px;
+    }
+}
+
+#postCheck {
+    text-align: center;
+}

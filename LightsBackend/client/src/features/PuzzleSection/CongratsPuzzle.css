@@ -1,0 +1,22 @@
+#puzzleFinished {
+    text-align: center;
+
+    hr {
+        margin-top: 20px;
+    }
+
+    #headerClose {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    #congratsMessage {
+        margin-top: -10px;
+    }
+
+    img {
+        background-color: transparent;
+        cursor: pointer;
+    }
+}
+
