@@ -11,6 +11,7 @@ import ForgotPassword from "../features/UnauthenticatedAccount/ForgotPassword/Fo
 import ResetPassword from "../features/UnauthenticatedAccount/ResetPassword/ResetPassword";
 import LandingPage from "../features/LandingPage/LandingPage";
 import PuzzleSection from "../features/PuzzleSection/PuzzleSection";
+import ContentTabs from "../features/ContentTabs/ContentTabs";
 
 export const router = createBrowserRouter([
     {
@@ -33,7 +34,8 @@ export const router = createBrowserRouter([
                     {path: '/piese', element: <div className="hero" id="list-hero"><PuzzleSection /></div>}
                 ]
             }, 
-            {path: '', element: <LandingPage />},
+            {path: '',  element: <LandingPage />},
+            {path: '/info',element:  <div className="hero" id="profile-hero"><ContentTabs /></div>},
             {path: '/game', element: <div className="hero"><Homepage /></div>},
         ]
     }

@@ -1,0 +1,41 @@
+.tab-section {
+    height: 70%;
+    max-height: 85%;
+    max-width: 80%;
+    margin: auto;
+    margin-top: 6%;
+    display: flex;
+}
+
+.tabs {
+    display: flex;
+    flex-direction: column;
+    padding-top: 80px;
+    background-color: transparent;
+}
+
+
+.tab {
+    padding: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    text-align: left;
+    border-radius: 20px 0px 0px 20px;
+}
+
+.tab:hover {
+    background-color: #e0e0e0;
+}
+
+.active {
+    background-color: #05053b;
+    font-weight: bold;
+}
+
+.tab-content {
+    padding: 20px;
+    flex-grow: 1;
+    background-color: #05053b;
+    border-radius: 20px;
+}

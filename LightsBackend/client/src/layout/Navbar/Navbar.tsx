@@ -67,21 +67,18 @@ function AuthenticatedLinks() {
 				width='576'
 			/>
 			<NavbarItem text='Piese' link='/piese' svgSource={Icons.puzzle} />
-
-			<li className='nav-item bottom-item'>
-				<a onClick={logout} href='#' className='nav-link'>
-					<svg viewBox='0 0 512 512'>
-						<g className='fa-group'>
-							<path
-								fill='currentColor'
-								d={Icons.exit}
-								className='fa-secondary'
-							></path>
-						</g>
-					</svg>
-					<span className='link-text'>Log out</span>
-				</a>
-			</li>
+			<NavbarItem
+				text='Holder'
+				link='/info'
+				svgSource={Icons.otter}
+				bottomItem={true}
+			/>
+			<NavbarItem
+				text='Logout'
+				link='#'
+				svgSource={Icons.exit}
+				onClick={logout}
+			/>
 		</>
 	);
 }

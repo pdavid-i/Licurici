@@ -30,14 +30,15 @@
         min-height: 48px;
         width: 40%;
         margin-right: 10px;
+        border-radius: 8px;
     }
 }
 
 @media (max-width: 620px) {
     #answerBar {
         padding: 0;
-        flex-direction: column; /* Stacks the flex items vertically */
-        align-items: center; /* Centers the items when stacked vertically */
+        flex-direction: column;
+        align-items: center;
     }
 
     button {
@@ -45,8 +46,8 @@
         margin-bottom: 10px;
     }
     #answerBar input {
-        width: 80%; /* Increases width for smaller screens */
-        margin-right: 0; /* Removes margin to center the input */
+        width: 80%; 
+        margin-right: 0;
         margin-bottom: 20px;
     }
 }
