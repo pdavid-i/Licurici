@@ -13,9 +13,10 @@ namespace API.Data
 
         public DbSet<Word> Words { get; set; }
         public DbSet<WordInteraction> Interactions { get; set; }
-        public DbSet<PasswordResetToken> Tokens {get; set;}
-        public DbSet<Thought> Thoughts {get; set;}
-
+        public DbSet<PasswordResetToken> Tokens { get; set; }
+        public DbSet<Thought> Thoughts { get; set; }
+        public DbSet<IncompleteSentence> IncompleteSentences { get; set; }
+        public DbSet<SentenceInteraction> SentenceInteractions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
