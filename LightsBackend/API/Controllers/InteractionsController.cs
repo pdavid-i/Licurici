@@ -197,7 +197,7 @@ namespace API.Controllers
         public async Task<WordUsageFeedbackDto> CheckUsageScore([FromBody] WordUsageDto model)
         {
 
-            AssistantsClient client = new AssistantsClient("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");
+            AssistantsClient client = new AssistantsClient("");
 
             // Create a thread
             Response<AssistantThread> threadResponse = await client.CreateThreadAsync();
@@ -213,7 +213,7 @@ namespace API.Controllers
             // Running the thread
             Response<ThreadRun> runResponse = await client.CreateRunAsync(
             thread.Id,
-            new CreateRunOptions("asst_9GaD8Z80gXImi9cKPUdjhQxf") { });
+            new CreateRunOptions("") { });
             ThreadRun run = runResponse.Value;
 
             do
